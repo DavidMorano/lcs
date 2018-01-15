@@ -1,0 +1,21 @@
+
+P=random1
+FLAGS="-D=2 -v=3"
+D=data
+
+
+FILES="${D}/alpha02str0250.str ${D}/alpha25str0300.str"
+${P} ${FLAGS} ${FILES} 2> o2
+
+#
+#FILES="${D}/alpha05str0250.str ${D}/alpha10str0300.str"
+#${P} ${FLAGS} ${FILES}
+#
+#FILES="${D}/alpha02str0100.str ${D}/alpha05str0125.str ${D}/alpha10str0150.str"
+#${P} ${FLAGS} ${FILES}
+#
+#FILES="${D}/alpha05str0500.str ${D}/alpha10str0600.str ${D}/alpha25str0700.str"
+#${P} ${FLAGS} ${FILES}
+#
+#
+

@@ -1,0 +1,12 @@
+
+FILES="random1/random1 random1/runem"
+FILES="${FILES} random2/random2 random2/runem"
+FILES="${FILES} local1/local1 local1/runem"
+FILES="${FILES} greedy/greedy greedy/runem"
+FILES="${FILES} ex1/ex1 ex1/runem"
+FILES="${FILES} ex2/ex2 ex2/runem"
+
+tar -cf it.tar ${FILES}
+gzip it.tar
+
+

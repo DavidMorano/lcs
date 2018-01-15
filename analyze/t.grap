@@ -1,0 +1,27 @@
+.\"_
+.DS
+.TS
+center,tab(;);
+l c l.
+Greedy/add-on;--;\(**
+Greedy/back-track;--;\(**
+Random/add-on;--;\s-3\(sq\s0
+Random/back-track;--;\s-3\(sq\s0
+Exhaustive/add-on;--; \s-3\(*D\s0
+Exhaustive/back-track;--; \s-4\(bx\s0
+.TE
+.G1
+frame invis ht 5 wid 5 left solid bot solid
+label bot "instances"
+coord x 0,31 y 25.0,200.0
+ticks bot out at 0, 10, 20, 30
+draw solid star
+new solid square
+new solid delta
+new solid box
+new solid box
+new solid box
+.G2
+.SP 1
+.DE
+.\"_

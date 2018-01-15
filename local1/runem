@@ -1,0 +1,129 @@
+
+P=local1
+FLAGS=""
+D=data
+
+FILES="${D}/alpha05str0010.str ${D}/alpha05str0020.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha05str0010.str ${D}/alpha05str0030.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha05str0020.str ${D}/alpha05str0200.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha05str0050.str ${D}/alpha05str2000.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha05str0010.str ${D}/alpha05str0050.str ${D}/alpha05str2000.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha10str0010.str ${D}/alpha05str0010.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha02str0010.str ${D}/alpha25str0030.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha02str0020.str ${D}/alpha05str0200.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha10str0050.str ${D}/alpha25str2000.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha02str0010.str ${D}/alpha02str0050.str ${D}/alpha02str2000.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha10str0020.str ${D}/alpha10str0700.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha25str0040.str ${D}/alpha25str2000.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha02str0100.str ${D}/alpha02str1400.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha02str0010.str ${D}/alpha25str2000.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha02str0010.str ${D}/alpha10str2000.str ${D}/alpha25str2000.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+
+
+FILES="${D}/alpha02str0030.str ${D}/alpha02str0040.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha05str0020.str ${D}/alpha05str0030.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha10str0020.str ${D}/alpha10str0030.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha25str0020.str ${D}/alpha25str0030.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha02str1800.str ${D}/alpha02str2000.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha05str1800.str ${D}/alpha05str2000.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha10str1800.str ${D}/alpha10str2000.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha25str1800.str ${D}/alpha25str2000.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha02str0075.str ${D}/alpha25str0100.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha10str0075.str ${D}/alpha25str0200.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha02str1800.str ${D}/alpha25str2000.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha02str0250.str ${D}/alpha25str0300.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha05str0250.str ${D}/alpha10str0300.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha02str0100.str ${D}/alpha05str0125.str ${D}/alpha10str0150.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+FILES="${D}/alpha05str0500.str ${D}/alpha10str0600.str ${D}/alpha25str0700.str"
+echo "\ninstance ${FILES}"
+${P} ${FLAGS} ${FILES}
+
+
+

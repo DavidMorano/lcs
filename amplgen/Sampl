@@ -1,0 +1,5 @@
+ # <-- test of AMPL
+# AMPL
+
+cat $1
+

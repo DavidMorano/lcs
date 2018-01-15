@@ -1,0 +1,57 @@
+.\"_
+.DS
+.TS
+center,tab(;);
+l c l.
+L1 only;--;\(**
+victim;--;\s-3\(sq\s0
+stream;--; \s-3\(*D\s0
+both;--; \s-4\(bx\s0
+.TE
+.G1
+label left "Relative" "Program" "Performance" left .5
+label bot "instance number"
+coord x 0,9 y 0.0,2.0
+ticks bot out at 1, 2, 3, 4, 5, 6, 7, 8
+draw solid star
+1 1.0
+2 1.0
+3 1.0
+4 1.0
+5 1.0
+6 1.0
+7 1.0
+8 1.0
+new solid square
+1 1.06
+2 1.06
+3 1.05
+4 1.05
+5 1.16
+6 1.23
+7 1.05
+8 1.07
+new solid delta
+1 1.15
+2 1.55
+3 1.37
+4 1.36
+5 1.18
+6 1.26
+7 1.51
+8 1.63
+new solid box
+1 1.19
+2 1.64
+3 1.44
+4 1.43
+5 1.22
+6 1.33
+7 1.57
+8 1.73
+.G2
+.SP 1
+.TB "Relative Algorithm Performance"
+.\"_ .TAG RELPERFORMANCE
+.DE
+.\"_

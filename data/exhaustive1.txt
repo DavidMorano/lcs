@@ -1,0 +1,103 @@
+alpha05str0010.str alpha05str0020.str
+
+LCSs are size 7.
+LCSs separated by /
+aadccda/aadccad
+ 
+alpha05str0010.str alpha05str0030.str
+
+LCSs are size 8.
+LCSs separated by /
+aadacada/aadacaea/aadcaada/aadcaaea/aadcacea/aadcacaa
+ 
+alpha05str0020.str alpha05str0200.str
+
+LCSs are size 20.
+LCSs separated by /
+abaaddeccdcbcadcbbcb
+ 
+alpha05str0050.str alpha05str2000.str
+
+LCSs are size 50.
+LCSs separated by /
+addaecadddabecacccbcebccbcabdabaaaeeababbaabdccbac
+ 
+alpha05str0010.str alpha05str0050.str alpha05str2000.str
+
+LCSs are size 10.
+LCSs separated by /
+aadcacaeda
+ 
+alpha10str0010.str alpha05str0010.str
+
+LCSs are size 3.
+LCSs separated by /
+cac
+ 
+alpha02str0010.str alpha25str0030.str
+
+LCSs are size 2.
+LCSs separated by /
+bb
+ 
+alpha02str0020.str alpha05str0200.str
+
+LCSs are size 20.
+LCSs separated by /
+aabaabaabaaabbbbbaab
+ 
+alpha10str0050.str alpha25str2000.str
+
+LCSs are size 50.
+LCSs separated by /
+jagdgjhjbajfgihefhjecahdidagijhgficacicbfdcjgdgead
+ 
+alpha02str0010.str alpha02str0050.str alpha02str2000.str
+
+LCSs are size 10.
+LCSs separated by /
+babaaaaaab
+ 
+alpha10str0020.str alpha10str0700.str
+
+LCSs are size 20.
+LCSs separated by /
+cffhaccabjjdcafcbccg
+ 
+alpha25str0040.str alpha25str2000.str
+
+LCSs are size 40.
+LCSs separated by /
+gmgwwqjmosqjrmnvfjsljkeeriocoqatjerlufsy
+ 
+alpha02str0100.str alpha02str1400.str
+
+LCSs are size 100.
+LCSs separated by /
+aabaaaaabbbaaabaaababbbaabababaaaaabaabbaabbbbaabbbabbbaaaabbaabaababbbaabbabbbaaabababaaabaabbbbaba
+ 
+alpha02str0010.str alpha25str2000.str
+
+LCSs are size 10.
+LCSs separated by /
+babaaaaaab
+ 
+alpha02str0010.str alpha10str2000.str alpha25str2000.str
+
+LCSs are size 10.
+LCSs separated by /
+babaaaaaab
+ 
+alpha02str0030.str alpha02str0040.str
+
+LCSs are size 28.
+LCSs separated by /
+bbaabbabbbbbaabbaabaaabbbaaa/bbaabaabbbbbaabbaabaaabbbaaa
+ 
+alpha05str0020.str alpha05str0030.str
+
+LCSs are size 14.
+LCSs separated by /
+aaadecdbadcbcb/aaadecdbadcbcb/aaadecdbadcbbc
+ 
+alpha10str0020.str alpha10str0030.str

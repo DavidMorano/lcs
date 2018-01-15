@@ -1,0 +1,68 @@
+
+P=random2
+FLAGS=""
+
+
+${P} ${FLAGS} alpha05-0010.str alpha05-0020.str
+
+${P} ${FLAGS} alpha05-0010.str alpha05-0030.str
+
+${P} ${FLAGS} alpha05-0020.str alpha05-0200.str
+
+${P} ${FLAGS} alpha05-0050.str alpha05-2000.str
+
+${P} ${FLAGS} alpha05-0010.str alpha05-0050.str alpha05-2000.str
+
+${P} ${FLAGS} alpha10-0010.str alpha05-0010.str
+
+${P} ${FLAGS} alpha02-0010.str alpha25-0030.str
+
+${P} ${FLAGS} alpha02-0020.str alpha05-0200.str
+
+${P} ${FLAGS} alpha10-0050.str alpha25-2000.str
+
+${P} ${FLAGS} alpha02-0010.str alpha02-0050.str alpha02-2000.str
+
+${P} ${FLAGS} alpha10-0020.str alpha10-0700.str
+
+${P} ${FLAGS} alpha25-0040.str alpha25-2000.str
+
+${P} ${FLAGS} alpha02-0100.str alpha02-1400.str
+
+${P} ${FLAGS} alpha02-0010.str alpha25-2000.str
+
+${P} ${FLAGS} alpha02-0010.str alpha10-2000.str alpha25-2000.str
+
+
+
+${P} ${FLAGS} alpha02-0030.str alpha02-0040.str
+
+${P} ${FLAGS} alpha05-0020.str alpha05-0030.str
+
+${P} ${FLAGS} alpha10-0020.str alpha10-0030.str
+
+${P} ${FLAGS} alpha25-0020.str alpha25-0030.str
+
+${P} ${FLAGS} alpha02-1800.str alpha02-2000.str
+
+${P} ${FLAGS} alpha05-1800.str alpha05-2000.str
+
+${P} ${FLAGS} alpha10-1800.str alpha10-2000.str
+
+${P} ${FLAGS} alpha25-1800.str alpha25-2000.str
+
+${P} ${FLAGS} alpha02-0075.str alpha25-0100.str
+
+${P} ${FLAGS} alpha10-0075.str alpha25-0200.str
+
+${P} ${FLAGS} alpha02-1800.str alpha25-2000.str
+
+${P} ${FLAGS} alpha02-0250.str alpha25-0300.str
+
+${P} ${FLAGS} alpha05-0250.str alpha10-0300.str
+
+${P} ${FLAGS} alpha02-0100.str alpha05-0125.str alpha10-0150.str
+
+${P} ${FLAGS} alpha05-0500.str alpha10-0600.str alpha25-0700.str
+
+

@@ -1,52 +1,52 @@
 /* ba (BitArray) */
 
-/* perform some bit array type operations */
+/* perform some bit-array type operations */
 
 
-#define	F_DEBUGS	0
+#define	CF_DEBUGS	0
 
 
-/* revistion history :
+/* revistion history:
 
-	= Dave Morano, May 27, 1998
-
+	= 1998-05-27, David A­D­ Morano
 	This subroutine was originally written.
-
 
 */
 
+/* Copyright © 1998 David A­D­ Morano.  All rights reserved. */
 
-/*******************************************************************
+/*******************************************************************************
 
-	This module does some bit array type stuff.
+	This module does some bit-array type stuff.
+
+	Notes:
+
+	a) we dynamically create a look-up table using | banum_prepare()|
 
 
-*********************************************************************/
+*******************************************************************************/
 
 
+#define	BA_MASTER	1
+
+
+#include	<envstandards.h>
 
 #include	<sys/types.h>
-#include	<sys/stat.h>
-#include	<sys/times.h>
 #include	<limits.h>
-#include	<fcntl.h>
-#include	<time.h>
-#include	<ctype.h>
-#include	<string.h>
 #include	<stdlib.h>
+#include	<string.h>
 
-#include	<bio.h>
-#include	<bitops.h>
+#include	<vsystem.h>
+#include	<localmisc.h>
 
-#include	"misc.h"
 #include	"ba.h"
 
 
+/* local defines */
 
-/* defines */
-
-#define	MAX16	(1 << 16)
-
+#define	BA_MAX16	(1 << 16)
+#define	BA_BITSPERWORD	(8 * sizeof(ULONG))
 
 
 /* external subroutines */
@@ -60,204 +60,194 @@
 
 /* forward references */
 
-static int	numbits() ;
+static int	numbits(int) ;
 
 
-/* local data */
+/* local variables */
 
 
+/* exported subroutines */
 
 
-
-int ba_numprepare(cnp)
-struct ba_num	*cnp ;
+int ba_start(BA *cp,BA_NUM *cnp,int n)
 {
-	int	i ;
+	const int	nw = ((n / BA_BITSPERWORD) + 1) ;
+	int		rs ;
+	int		size ;
+	void		*p ;
 
-
-	if ((cnp->num = (int *) malloc(MAX16 * sizeof(int))) == NULL)
-	    return BAD ;
-
-/* make it */
-
-	for (i = 0 ; i < MAX16 ; i += 1)
-	    cnp->num[i] = numbits(i) ;
-
-	return OK ;
-}
-
-
-static int numbits(n)
-int	n ;
-{
-	int	sum = 0 ;
-
-
-	while (n) {
-
-	    if (n & 1) sum += 1 ;
-
-	    n = n >> 1 ;
-	}
-
-	return sum ;
-}
-
-
-void ba_numforsake(cnp)
-struct ba_num	*cnp ;
-{
-
-
-	if (cnp->num != NULL) {
-
-	    free(cnp->num) ;
-
-	    cnp->num = NULL ;
-	}
-
-}
-
-
-int ba_init(cp,cnp,n)
-struct ba_bitarray	*cp ;
-struct ba_num		*cnp ;
-int			n ;
-{
-	int	i, nw ;
-
-
-	nw = (n / 32) + 1 ;
+	if (cp == NULL) return SR_FAULT ;
 
 	cp->cnp = NULL ;
-	if ((cp->a = (unsigned long *) malloc(nw * sizeof(long))) == NULL)
-	    return BAD ;
 
-	for (i = 0 ; i < nw ; i += 1)
-	    cp->a[i] = 0 ;
+	size = nw * sizeof(ULONG) ;
+	if ((rs = uc_malloc(size,&p)) >= 0) {
+	    int		i ;
+	    cp->a = p ;
+	    for (i = 0 ; i < nw ; i += 1) cp->a[i] = 0 ;
+	    cp->cnp = cnp ;
+	    cp->nbits = n ;
+	    cp->nwords = nw ;
+	} /* end if */
 
-	cp->cnp = cnp ;
-	cp->nbits = n ;
-	cp->nwords = nw ;
-	return OK ;
+	return rs ;
 }
+/* end subroutine (ba_start) */
 
 
-void ba_setones(cp)
-struct ba_bitarray	*cp ;
+int ba_setones(BA *cp)
 {
-	int	j ;
+	int		size ;
 
+	size = cp->nwords * sizeof(ULONG) ;
+	memset(cp->a,(~0),size) ;
 
-	memset(cp->a,(~0),(cp->nwords - 1) * sizeof(long)) ;
-
-	for (j = 0 ; j < (cp->nbits % 32) ; j += 1)
-	    BSETL(cp->a + (cp->nwords - 1),j) ;
-
+	return SR_OK ;
 }
+/* end subroutine (ba_setones) */
 
 
-void ba_zero(cp)
-struct ba_bitarray	*cp ;
+int ba_zero(BA *cp)
 {
-	int	j ;
+	int		size ;
 
-
-#if	F_DEBUGS
-	eprintf("ba_zero: entered\n") ;
+#if	CF_DEBUGS
+	debugprintf("ba_zero: ent\n") ;
+	debugprintf("ba_zero: nwords=%u nbits=%u\n",cp->nwords,cp->nbits) ;
 #endif
 
-#if	F_DEBUGS
-	eprintf("ba_zero: nwords=%d, nbits=%d\n",cp->nwords,cp->nbits) ;
-#endif
+	size = cp->nwords * sizeof(ULONG) ;
+	memset(cp->a,0,size) ;
 
-	memset(cp->a,0,(cp->nwords - 1) * sizeof(long)) ;
-
-	for (j = 0 ; j < (cp->nbits % 32) ; j += 1)
-	    BCLRL(cp->a + (cp->nwords - 1),j) ;
-
+	return SR_OK ;
 }
+/* end subroutine (ba_zero) */
 
 
-void ba_countdown(cp)
-struct ba_bitarray	*cp ;
+int ba_countdown(BA *cp)
 {
-	int	r = 0 ;
-	int	f_borrow ;
-	int	f_msb1, f_msb2 ;
-
+	int		r = 0 ;
+	int		f_borrow ;
+	int		f_msb1, f_msb2 ;
 
 	do {
-
-	    f_msb1 = cp->a[r] & 0x7FFFFFFF ;
+	    f_msb1 = cp->a[r] & INT_MAX ;
 	    cp->a[r] -= 1 ;
-	    f_msb2 = cp->a[r] & 0x7FFFFFFF ;
+	    f_msb2 = cp->a[r] & INT_MAX ;
 	    f_borrow = (! f_msb1) && f_msb2 ;
 	    r += 1 ;
-
 	} while (f_borrow && (r < cp->nwords)) ;
 
+	return SR_OK ;
 }
+/* end subroutine (ba_countdown) */
 
 
-void ba_and(cp1,cp2)
-struct ba_bitarray	*cp1, *cp2 ;
+int ba_and(BA *cp1,BA *cp2)
 {
-	int	i, nw ;
-	int	f_borrow ;
-	int	f_msb1, f_msb2 ;
-
-	long	t ;
-
+	int		i, nw ;
 
 	nw = MIN(cp1->nwords,cp2->nwords) ;
 
-	for (i = 0 ; i < nw ; i += 1)
-		cp1->a[i] = cp1->a[i] & cp2->a[i] ;
+	for (i = 0 ; i < nw ; i += 1) {
+	    cp1->a[i] = cp1->a[i] & cp2->a[i] ;
+	}
 
+	return SR_OK ;
 }
+/* end subroutine (ba_and) */
 
 
-int ba_numones(cp)
-struct ba_bitarray	*cp ;
+int ba_numones(BA *cp)
 {
-	int	i ;
-	int	sum = 0 ;
-	int	high, low ;
+	int		i ;
+	int		sum = 0 ;
+	int		*na = (cp->cnp)->num ;
 
-	int	*tp ;
-
-
-	tp = (cp->cnp)->num ;
 	for (i = 0 ; i < cp->nwords ; i += 1) {
-
-	    sum += tp[cp->a[i] & (MAX16 - 1)] ;
-	    sum += tp[(cp->a[i] >> 16) & (MAX16 - 1)] ;
-
+	    ULONG	v = cp->a[i] ;
+	    sum += na[v & (BA_MAX16 - 1)] ; v >>= 16 ;
+	    sum += na[v & (BA_MAX16 - 1)] ; v >>= 16 ;
+	    sum += na[v & (BA_MAX16 - 1)] ; v >>= 16 ;
+	    sum += na[v & (BA_MAX16 - 1)] ; v >>= 16 ;
 	} /* end for */
 
 	return sum ;
 }
+/* end subroutine (ba_numones) */
 
 
-void ba_free(cp)
-struct ba_bitarray	*cp ;
+int ba_finish(BA *cp)
 {
+	int		rs = SR_OK ;
+	int		rs1 ;
 
+	if (cp == NULL) return SR_FAULT ;
 
 	if (cp->a != NULL) {
-
-	    free(cp->a) ;
-
+	    rs1 = uc_free(cp->a) ;
+	    if (rs >= 0) rs = rs1 ;
 	    cp->a = NULL ;
 	}
 
 	cp->cnp = NULL ;
 	cp->nbits = 0 ;
 	cp->nwords = 0 ;
+	return rs ;
 }
-/* end subroutine (ba_free) */
+/* end subroutine (ba_finish) */
 
 
+/* other interfaces */
+
+
+int banum_prepare(BA_NUM *cnp)
+{
+	const int	size = (BA_MAX16 * sizeof(int)) ;
+	int		rs ;
+
+	if ((rs = uc_malloc(size,&cnp->num)) >= 0) {
+	    int		i ;
+	    for (i = 0 ; i < BA_MAX16 ; i += 1) {
+	        cnp->num[i] = numbits(i) ;
+	    }
+	}
+
+	return rs ;
+}
+/* end subroutine (banum_prepare) */
+
+
+int banum_forsake(BA_NUM *cnp)
+{
+	int		rs = SR_OK ;
+	int		rs1 ;
+
+	if (cnp->num != NULL) {
+	    rs1 = uc_free(cnp->num) ;
+	    if (rs >= 0) rs = rs1 ;
+	    cnp->num = NULL ;
+	}
+
+	return rs ;
+}
+/* end subroutine (banum_forsake) */
+
+
+/* private subroutines */
+
+
+static int numbits(int n)
+{
+	int		sum = 0 ;
+
+	while (n) {
+	    if (n & 1) sum += 1 ;
+	    n = n >> 1 ;
+	}
+
+	return sum ;
+}
+/* end subroutine (numbits) */
 
 

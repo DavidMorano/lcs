@@ -3,27 +3,26 @@
 /* perform a local search algorithm */
 
 
-#define	F_DEBUG		0
-#define	F_ALLSTRINGS	1
+#define	CF_DEBUG	0		/* compile-time debugging */
+#define	CF_ALLSTRINGS	1
 
 
 /* revistion history :
 
-	= Dave Morano, May 27, 1998
+	= 1998-05-28, Dave Morano
 	This subroutine was originally written.
 
 
 */
 
+/* Copyright © 1998 David A­D­ Morano.  All rights reserved. */
 
-/*******************************************************************
+/*******************************************************************************
 
-	This subroutine takes as input a list of strings
-	and produces as output a list of strings which are
-	the longest common subsequences of the input strings.
-	This subroutine performs a local search type of
-	algorithm to find the best LCS possible within a
-	local neighborhood.
+        This subroutine takes as input a list of strings and produces as output
+        a list of strings which are the longest common subsequences of the input
+        strings. This subroutine performs a local search type of algorithm to
+        find the best LCS possible within a local neighborhood.
 
 	Arguments :
 	- pointer to the program's global data
@@ -35,32 +34,30 @@
 	>=0	length of subsequence found
 
 
-*********************************************************************/
+*******************************************************************************/
 
 
+#include	<envstandards.h>
 
 #include	<sys/types.h>
 #include	<sys/stat.h>
 #include	<sys/times.h>
 #include	<limits.h>
-#include	<fcntl.h>
 #include	<time.h>
-#include	<ctype.h>
 #include	<string.h>
 #include	<stdlib.h>
 
-#include	<bio.h>
-#include	<bitops.h>
+#include	<vsystem.h>
+#include	<bfile.h>
+#include	<baops.h>
+#include	<localmisc.h>
 
-#include	"misc.h"
 #include	"config.h"
 #include	"defs.h"
 #include	"ba.h"
 
 
-
-/* defines */
-
+/* local defines */
 
 
 /* external subroutines */
@@ -70,7 +67,7 @@ extern char	*malloc_sbuf() ;
 
 /* external variables */
 
-#if	F_DEBUG
+#if	CF_DEBUG
 extern struct global	g ;
 #endif
 
@@ -86,7 +83,7 @@ static void	taken(), taken_back() ;
 static void	pa_init() ;
 static void	inplay_init() ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 static void	taken_print() ;
 static void	eprint_string() ;
 #endif
@@ -95,9 +92,10 @@ static void	eprint_string() ;
 /* local structures */
 
 
-/* local data */
+/* local variables */
 
 
+/* exported subroutines */
 
 
 int local2(gp,isp,osp)
@@ -105,12 +103,10 @@ struct global	*gp ;
 struct strings	*isp, *osp ;
 {
 	struct string	*esep, *sep ;
-
 	struct tms	tms_now ;
-
-	time_t	t_end ;
-
-	clock_t	tics_cpu ;
+	time_t		ti_start = time(NULL) ;
+	time_t		ti_end ;
+	clock_t		tics_cpu = 0 ;
 
 	int	i, j, jj ;
 	int	rs ;
@@ -123,16 +119,14 @@ struct strings	*isp, *osp ;
 	char	**pa, **npa ;	/* array of pointers to current indices */
 	char	*s_current, *csp ;
 
-
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
-	    eprintf("/local2: entered\n") ;
+	    eprintf("/local2: ent\n") ;
 #endif
-
 
 	(void) times(&tms_now) ;
 
-	tics_cpu = tms_now.tms_utime + tms_now.tms_cutime ;
+	tics_cpu = (tms_now.tms_utime + tms_now.tms_cutime) ;
 	tics_cpu += (tms_now.tms_stime + tms_now.tms_cstime) ;
 	t_end = (tics_cpu / CLK_TCK) + (gp->maxtime * 60) ;
 
@@ -144,7 +138,7 @@ struct strings	*isp, *osp ;
 
 /* allocate the pointer array */
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("/local2: allocate\n") ;
 #endif
@@ -171,7 +165,7 @@ struct strings	*isp, *osp ;
 
 /* expand out the shortest string first, find the shortest string */
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("/local2: finding shortest string\n") ;
 #endif
@@ -182,7 +176,7 @@ struct strings	*isp, *osp ;
 	esi = -1 ;
 	for (i = 0 ; veclistget(&isp->vl,i,&sep) >= 0 ; i += 1) {
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	    if (gp->debuglevel > 1)
 	        eprintf("/local2: string %d\n",i) ;
 #endif
@@ -198,7 +192,7 @@ struct strings	*isp, *osp ;
 
 	    } else {
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	        if (gp->debuglevel > 1)
 	            eprintf("/local2: verbose\n") ;
 #endif
@@ -209,14 +203,14 @@ struct strings	*isp, *osp ;
 	            esi = i ;
 	        }
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	        if (gp->debuglevel > 1)
 	            eprintf("/local2: initing this string\n") ;
 #endif
 
 	        inplay_init(isp,i) ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	        if (gp->debuglevel > 1)
 	            eprintf("/local2: %08X\n",sep->inplay.a[0]) ;
 #endif
@@ -231,16 +225,15 @@ struct strings	*isp, *osp ;
 	bflush(gp->ofp) ;
 
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("/local2: expanding shortest string\n") ;
 #endif
 
-	rs = expandstr(gp,isp,nstrings,esi,pa,npa,
-	    s_current,osp) ;
+	rs = expandstr(gp,isp,nstrings,esi,pa,npa, s_current,osp) ;
 
 
-#if	F_ALLSTRINGS
+#if	CF_ALLSTRINGS
 
 /* loop through all strings, each being the expanding string in turn */
 
@@ -248,7 +241,7 @@ struct strings	*isp, *osp ;
 
 	    if (i == esi) continue ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	    if (gp->debuglevel > 1)
 	        eprintf("/local2: expand loop %d\n",i) ;
 #endif
@@ -260,20 +253,20 @@ struct strings	*isp, *osp ;
 	    if ((tics_cpu / CLK_TCK) > t_end)
 	        break ;
 
-	    rs = expandstr(gp,isp,nstrings,i,pa,npa,
-	        s_current,osp) ;
+	    rs = expandstr(gp,isp,nstrings,i,pa,npa, s_current,osp) ;
 
-	    if (gp->debuglevel > 0)
+	    if (gp->debuglevel > 0) {
 	        bprintf(gp->efp,"%s: LCS expanding of string %d is len=%d\n",
 	            gp->progname,
 	            i,rs) ;
+	    }
 
 	} /* end for */
 
-#endif /* F_ALLSTRINGS */
+#endif /* CF_ALLSTRINGS */
 
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("/local2: out of loop\n") ;
 #endif
@@ -297,7 +290,6 @@ badmalloc1:
 /* end subroutine (local2) */
 
 
-
 static int expandstr(gp,isp,n,esi,pa,npa,s_current,osp)
 struct global	*gp ;
 int		n, esi ;
@@ -319,20 +311,20 @@ char		s_current[] ;
 	char	*csp ;
 
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
-	    eprintf("expandstr: entered, esi=%d\n",esi) ;
+	    eprintf("expandstr: ent, esi=%d\n",esi) ;
 #endif
 
 	if ((esi < 0) || (esi >= n))
 	    return -4 ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("expandstr: start to find a common one\n") ;
 #endif
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	taken_print(gp,isp) ;
 #endif
@@ -352,13 +344,13 @@ char		s_current[] ;
 	    goto badstrings ;
 	}
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("expandstr: first loop, 1st string len=%d\n",
 	        esep->len) ;
 #endif
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	taken_print(gp,isp) ;
 #endif
@@ -370,14 +362,14 @@ char		s_current[] ;
 
 	    gp->iterations += 1 ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	    if (gp->debuglevel > 1)
 	        eprintf("expandstr: top loop\n",j) ;
 #endif
 
 	    tc = esep->s[j] ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	    if (gp->debuglevel > 1)
 	        eprintf("expandstr: calling present\n") ;
 #endif
@@ -385,14 +377,14 @@ char		s_current[] ;
 	    if (present(gp,&isp->vl,n,esi,tc,pa,npa,lcs_len - cslen - 1))
 	        break ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	    if (gp->debuglevel > 1)
 	        eprintf("expandstr: bottom loop\n",j) ;
 #endif
 
 	} /* end for */
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("expandstr: out of loop\n") ;
 #endif
@@ -400,7 +392,7 @@ char		s_current[] ;
 	if (j >= search_len)
 	    goto none ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("expandstr: found a subsequence at j=%d\n",j) ;
 #endif
@@ -409,12 +401,12 @@ char		s_current[] ;
 	    npa[esi] = esep->s + j + 1 ;
 	memcpy(pa,npa,n * sizeof(char *)) ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("expandstr: calling taken\n") ;
 #endif
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	taken_print(gp,isp) ;
 #endif
@@ -424,12 +416,12 @@ char		s_current[] ;
 	cslen += 1 ;
 
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	taken_print(gp,isp) ;
 #endif
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("expandstr: calling extend\n") ;
 #endif
@@ -437,17 +429,17 @@ char		s_current[] ;
 	cslen = extend(gp,isp,n,lcs_len,pa,npa,
 		s_current,cslen,j + 1,esep,esi) ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("expandstr: back from extend\n") ;
 #endif
 
 
-/* is this LCS better than any found so far ? */
+/* is this LCS better than any found so far? */
 
 	if (cslen >= lcs_len) {
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	    if (gp->debuglevel > 1)
 	        eprintf("expandstr: got a good or better one\n") ;
 #endif
@@ -462,7 +454,7 @@ char		s_current[] ;
 
 /* OK, now let's look around the neighborhood for different paths */
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("expandstr: rolling back\n") ;
 #endif
@@ -470,12 +462,12 @@ char		s_current[] ;
 	for (oj = (cslen - 1) ; oj >= 0 ; oj -= 1) {
 
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("expandstr: rolling back %d\n",oj) ;
 #endif
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 		taken_print(gp,isp) ;
 #endif
@@ -487,12 +479,12 @@ char		s_current[] ;
 
 		pa[esi] = esep->s + j + 1 ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 		taken_print(gp,isp) ;
 #endif
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	    if (gp->debuglevel > 1)
 	        eprintf("expandstr: now extending\n") ;
 #endif
@@ -501,17 +493,14 @@ char		s_current[] ;
 	        s_current,oj,j + 1,esep,esi) ;
 
 
-/* is this LCS better than any found so far ? */
+/* is this LCS better than any found so far? */
 
 	    if (cslen >= lcs_len) {
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	        if (gp->debuglevel > 1) {
-
 	            eprintf("expandstr: we actually got one at %d\n",j) ;
-
 			(void) eprint_string(s_current,cslen) ;
-
 		}
 #endif
 
@@ -528,7 +517,7 @@ char		s_current[] ;
 
 /* we are out of here */
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("expandstr: returning len=%d\n",cslen) ;
 #endif
@@ -549,7 +538,6 @@ badstore:
 /* end subroutine (expandstr) */
 
 
-
 static int extend(gp,isp,n,lcs_len,pa,npa,s_current,cslen,csj,esep,esi)
 struct global	*gp ;
 struct strings	*isp ;
@@ -565,9 +553,9 @@ int		cslen, csj, esi ;
 	char	*csp ;
 
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
-	    eprintf("extend: entered, esi=%d, cslen=%d, csj=%d\n",
+	    eprintf("extend: ent, esi=%d, cslen=%d, csj=%d\n",
 	        esi,cslen,csj) ;
 #endif
 
@@ -581,14 +569,14 @@ int		cslen, csj, esi ;
 
 	    tc = esep->s[jj] ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	    if (gp->debuglevel > 1)
 	        eprintf("extend: adding loop %d, tc=%c\n",jj,tc) ;
 #endif
 
 	    if (present(gp,&isp->vl,n,esi,tc,pa,npa,lcs_len - cslen - 1)) {
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	        if (gp->debuglevel > 1)
 	            eprintf("extend: got one j=%d, tc=%c\n",jj,tc) ;
 #endif
@@ -597,7 +585,7 @@ int		cslen, csj, esi ;
 	        npa[esi] = esep->s + jj + 1 ;
 	        memcpy(pa,npa,n * sizeof(char *)) ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	        if (gp->debuglevel > 1)
 	            eprintf("extend: about to take cslen=%d, npa[%d]=%08X\n",
 	                cslen,esi,npa[esi]) ;
@@ -605,7 +593,7 @@ int		cslen, csj, esi ;
 
 	        taken(&isp->vl,pa,cslen) ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	        if (gp->debuglevel > 1)
 	            eprintf("extend: taken returned\n") ;
 #endif
@@ -614,14 +602,14 @@ int		cslen, csj, esi ;
 
 	    } /* end if */
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	    if (gp->debuglevel > 1)
 	        eprintf("extend: bottom loop\n") ;
 #endif
 
 	} /* end for */
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (gp->debuglevel > 1)
 	    eprintf("extend: exiting %d\n",cslen) ;
 #endif
@@ -641,22 +629,20 @@ int		minleft ;
 {
 	struct string	*sep ;
 
-	int	i, remaining ;
+	int		i, remaining ;
 
-	char	*csp, *ncsp ;
+	char		*csp, *ncsp ;
 
 
-#if	F_DEBUG && 0
+#if	CF_DEBUG && 0
 	if (gp->debuglevel > 1)
-	    eprintf("present: entered\n") ;
+	    eprintf("present: ent\n") ;
 #endif
 
 	for (i = 0 ; i < nstrings ; i += 1) {
-
 	    char	*s ;
 
-
-#if	F_DEBUG && 0
+#if	CF_DEBUG && 0
 	    if (gp->debuglevel > 1)
 	        eprintf("present: loop %d\n",i) ;
 #endif
@@ -697,19 +683,17 @@ char		**pa ;
 int		oj ;
 {
 	struct string	*sep ;
+	int		i, index ;
 
-	int	i, index ;
-
-
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (g.debuglevel > 1)
-	    eprintf("taken: entered %d\n",oj) ;
+	    eprintf("taken: ent %d\n",oj) ;
 #endif
 
-#if	defined(COMMENT) || F_DEBUG
+#if	defined(COMMENT) || CF_DEBUG
 	for (i = 0 ; veclistget(vlp,i,&sep) >= 0 ; i += 1) {
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	    if (g.debuglevel > 1)
 	        eprintf("taken: %d s=%08X pa=%08X\n",
 	            i,sep->s,pa[i]) ;
@@ -717,7 +701,7 @@ int		oj ;
 
 	    index = pa[i] - sep->s - 1 ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	    if (g.debuglevel > 1) {
 
 	        if (index < 0)
@@ -754,13 +738,11 @@ char		**pa ;
 int		oj ;
 {
 	struct string	*sep ;
+	int		i, j, jj, index ;
 
-	int	i, j, jj, index ;
-
-
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (g.debuglevel > 1)
-	    eprintf("taken_back: entered, oj=%d\n",oj) ;
+	    eprintf("taken_back: ent, oj=%d\n",oj) ;
 #endif
 
 	i = 0 ;
@@ -772,19 +754,20 @@ int		oj ;
 	    if ((sep = vlp->va[i]) == NULL) break ;
 #endif
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	    if (g.debuglevel > 1)
 	        eprintf("taken_back: string %d\n",i) ;
 #endif
 
-	    for (jj = sep->oip[oj] ; jj < sep->len ; jj += 1)
+	    for (jj = sep->oip[oj] ; jj < sep->len ; jj += 1) {
 	        sep->taken[jj] = -1 ;
+	    }
 
-	    if (oj <= 0)
+	    if (oj <= 0) {
 	        pa[i] = sep->s ;
-
-	    else
+	    } else {
 	        pa[i] = sep->s + sep->oip[oj - 1] + 1 ;
+	    }
 
 	    i += 1 ;
 
@@ -799,12 +782,11 @@ struct veclist	*vlp ;
 char		**pa ;
 {
 	struct string	*sep ;
+	int		i ;
 
-	int	i ;
-
-
-	for (i = 0 ; veclistget(vlp,i,&sep) >= 0 ; i += 1)
+	for (i = 0 ; veclistget(vlp,i,&sep) >= 0 ; i += 1) {
 	    pa[i] = sep->s ;
+	}
 
 }
 /* end subroutine (pa_init) */
@@ -816,41 +798,40 @@ char		s_current[] ;
 int		cslen ;
 {
 	struct string	*sep ;
+	int		lcs_len ;
+	int		rs ;
+	int		rs ;
 
-	int	lcs_len ;
-	int	i, rs ;
-
-
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (g.debuglevel > 1)
-	    eprintf("better: entered\n") ;
+	    eprintf("better: ent\n") ;
 #endif
 
 	lcs_len = osp->maxlen ;
 	if (cslen >= lcs_len) {
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	    if (g.debuglevel > 1)
 	        eprintf("better: got one\n") ;
 #endif
 
 	    if (cslen > lcs_len) {
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	        if (g.debuglevel > 1)
 	            eprintf("better: a better one\n") ;
 #endif
 
 	        strings_free(osp) ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	        if (g.debuglevel > 1)
 	            eprintf("better: freed previous\n") ;
 #endif
 
 	        strings_init(osp) ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	        if (g.debuglevel > 1)
 	            eprintf("better: storing better one\n") ;
 #endif
@@ -858,7 +839,7 @@ int		cslen ;
 	        if (strings_add(osp,s_current,cslen) < 0)
 	            return BAD ;
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	        if (g.debuglevel > 1)
 	            eprintf("better: done storing better one\n") ;
 #endif
@@ -896,14 +877,13 @@ struct strings	*ssp ;
 int		esi ;
 {
 	struct string	*esep, *sep ;
+	int		rs = SR_OK ;
+	int		i, j ;
+	int		alen ;
 
-	int	rs, i, j ;
-	int	alen ;
-
-
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (g.debuglevel > 1)
-	    eprintf("inplay_init: entered\n") ;
+	    eprintf("inplay_init: ent\n") ;
 #endif
 
 /* get a pointer to the expanding string */
@@ -912,7 +892,7 @@ int		esi ;
 
 /* clear all "inplay" bits */
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (g.debuglevel > 1)
 	    eprintf("inplay_init: zeroing\n") ;
 #endif
@@ -922,7 +902,7 @@ int		esi ;
 
 /* expand and set bits which matter */
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (g.debuglevel > 1)
 	    eprintf("inplay_init: looping\n") ;
 #endif
@@ -930,7 +910,6 @@ int		esi ;
 	for (j = 0 ; j < esep->len ; j += 1) {
 
 	    for (i = 0 ; (rs = veclistget(&ssp->vl,i,&sep)) >= 0 ; i += 1) {
-
 	        if (i == esi) continue ;
 
 	        if (strchr(sep->s,esep->s[j]) == NULL) break ;
@@ -942,7 +921,7 @@ int		esi ;
 
 	} /* end for */
 
-#if	F_DEBUG
+#if	CF_DEBUG
 	if (g.debuglevel > 1)
 	    eprintf("inplay_init: exiting\n") ;
 #endif
@@ -951,20 +930,16 @@ int		esi ;
 /* end subroutine (inplay_init) */
 
 
-#if	F_DEBUG
+#if	CF_DEBUG
 
 static void taken_print(gp,isp)
 struct global	*gp ;
 struct strings	*isp ;
 {
 
-
 	if (gp->debuglevel > 1) {
-
 	    struct string	*dsp ;
-
-	    int	di, dj ;
-
+	    int			di, dj ;
 
 	    eprintf("taken_print: taken array\n") ;
 
@@ -982,29 +957,23 @@ struct strings	*isp ;
 	}
 }
 
-#endif /* F_DEBUG */
+#endif /* CF_DEBUG */
 
 
 static void eprint_string(s,len)
 char	s[] ;
 int	len ;
 {
-	int	plen ;
-
+	int		plen ;
 
 	while (len > 0) {
-
 	    plen = MIN(len,60) ;
-
-	    eprintf("\t%W\n",s,plen) ;
-
+	    eprintf("\t%t\n",s,plen) ;
 	    len -= plen ;
 	    s += plen ;
-
 	}
 
 }
 /* end subroutine (eprint_string) */
-
 
 

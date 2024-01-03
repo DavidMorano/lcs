@@ -6,14 +6,27 @@
 *.ls
 *.a
 *.i
+*.ii
 
 *.tar
+*.tar.bz2
+
 *.ca
+*.ca.bz2
 
 *.gz
 *.bz2
 *.z
 *.Z
+
+*.swp
+
+todo.txt
+
+o
+oo
+o1
+o2
 
 .DS_Store
 .gitattributes

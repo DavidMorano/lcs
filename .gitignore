@@ -22,14 +22,29 @@
 *.swp
 
 todo.txt
+tags
 
 o
 oo
 o1
 o2
 
+c1
+c2
+r1
+r2
+
 .DS_Store
 .gitattributes
 .gitnotes
+.tags
+
+.kshrc
+.profile
+.bbnewsrc
+.fullname
+.msgrc
+.swd
+.news_time
 
 

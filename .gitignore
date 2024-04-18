@@ -7,6 +7,7 @@
 *.a
 *.i
 *.ii
+*.gch
 
 *.tar
 *.tar.bz2

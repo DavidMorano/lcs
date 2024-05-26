@@ -1,10 +1,10 @@
 *.o
-*.x 
+*.a
 *.so
+*.x 
 *.lm
 *.ln
 *.ls
-*.a
 *.i
 *.ii
 *.gch
@@ -27,6 +27,9 @@ tags
 change
 changer
 
+x
+so
+a
 o
 oo
 oc

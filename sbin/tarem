@@ -1,3 +1,5 @@
+#!/usr/extra/bin/ksh
+# TAREM
 
 FILES="random1/random1 random1/runem"
 FILES="${FILES} random2/random2 random2/runem"

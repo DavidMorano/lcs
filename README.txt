@@ -1,4 +1,5 @@
 Longest Common Subsequence (LCS) determination
+--------------------------------------------------------------------------------
 
 This code base was an experiement in finding the Longest Common Subsequence
 in a set of strings.  The set of strings can hold as many strings as desired

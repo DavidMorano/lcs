@@ -8,6 +8,7 @@
 *.i
 *.ii
 *.gch
+*.gcm
 
 *.tar
 *.tar.bz2

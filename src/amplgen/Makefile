@@ -24,9 +24,7 @@ LIBS= -ldam -lb
 CRT0=
 
 
-
 OBJ= main.o procfile.o version.o strings.o ampl.o
-
 
 
 all:		$(T)
@@ -53,8 +51,6 @@ again:
 
 
 main.o:		main.c config.h defs.h
-
 version.o:	version.c config.h
-
 
 

@@ -1,5 +1,0 @@
-
-DATA=`fgrep data ${1} | cut -d ' ' -f 2 `
-cat $DATA > lcs.dat
-
-

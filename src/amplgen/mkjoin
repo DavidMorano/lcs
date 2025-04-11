@@ -1,0 +1,12 @@
+#!/usr/bin/ksh
+# MKJOIN
+
+PN=${0##/*}
+if [[ -r "${1}" ]] ; then
+  DATA=$( fgrep data ${1} | cut -d ' ' -f 2 )
+  cat ${DATA} > lcs.dat
+else
+  print -u 2 -- "${PN}: no file given"
+fi
+
+

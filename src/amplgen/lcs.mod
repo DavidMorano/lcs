@@ -1,4 +1,4 @@
-# LCS (MODEL)
+# LCS (MODEL - AMPL - A-Mathematical-Programming-Language)
 
 
 param N;

@@ -76,7 +76,7 @@ struct strings	*ssp ;
 {
 	bfile		infile, *ifp = &infile ;
 
-	struct stat	sb ;
+	USTAT	sb ;
 
 	int	i ;
 	int	len, l, rs ;

@@ -42,10 +42,10 @@
 #include	<sys/types.h>
 #include	<sys/stat.h>
 #include	<sys/times.h>
-#include	<limits.h>
+#include	<climits>
 #include	<time.h>
-#include	<string.h>
-#include	<stdlib.h>
+#include	<cstring>
+#include	<cstdlib>
 
 #include	<vsystem.h>
 #include	<bfile.h>

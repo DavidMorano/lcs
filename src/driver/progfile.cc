@@ -29,8 +29,8 @@
 #include	<envstandards.h>
 
 #include	<sys/types.h>
-#include	<string.h>
-#include	<stdlib.h>
+#include	<cstring>
+#include	<cstdlib>
 
 #include	<vsystem.h>
 #include	<bfile.h>

@@ -7,7 +7,7 @@
 #define	F_LOG		1
 
 
-#include	<stdio.h>
+#include	<cstdio>
 
 
 

@@ -34,12 +34,12 @@
 #include	<sys/param.h>
 #include	<sys/times.h>
 #include	<sys/time.h>
-#include	<limits.h>
+#include	<climits>
 #include	<fcntl.h>
 #include	<time.h>
 #include	<ctype.h>
-#include	<string.h>
-#include	<stdlib.h>
+#include	<cstring>
+#include	<cstdlib>
 
 #include	<bio.h>
 #include	<bitops.h>

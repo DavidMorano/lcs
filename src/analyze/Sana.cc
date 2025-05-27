@@ -4,7 +4,7 @@
 #define	F_DEBUG		0
 
 
-#include	<stdio.h>
+#include	<cstdio>
 
 
 

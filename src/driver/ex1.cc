@@ -43,12 +43,12 @@
 #include	<sys/types.h>
 #include	<sys/stat.h>
 #include	<sys/times.h>
-#include	<limits.h>
+#include	<climits>
 #include	<fcntl.h>
 #include	<time.h>
 #include	<ctype.h>
-#include	<string.h>
-#include	<stdlib.h>
+#include	<cstring>
+#include	<cstdlib>
 
 #include	<bfile.h>
 #include	<bitops.h>

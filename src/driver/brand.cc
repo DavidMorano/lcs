@@ -4,7 +4,7 @@
 
 
 #include	<envstandards.h>
-#include	<stdlib.h>
+#include	<cstdlib>
 
 
 /* local subroutines */

@@ -6,7 +6,7 @@
 #define	F_GRAP		1
 
 
-#include	<stdio.h>
+#include	<cstdio>
 
 
 

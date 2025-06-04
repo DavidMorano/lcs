@@ -32,8 +32,11 @@ x
 so
 a
 o
+e
 oo
 oc
+oe
+oh
 o1
 o2
 
@@ -43,11 +46,13 @@ r1
 r2
 
 .DS_Store
+.git
 .gitattributes
 .gitnotes
 .tags
 
 .reporoot
+.repo
 .kshrc
 .profile
 .bbnewsrc

@@ -9,6 +9,7 @@
 *.ii
 *.gch
 *.gcm
+*.dylib
 
 *.tar
 *.tar.bz2

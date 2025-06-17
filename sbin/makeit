@@ -1,6 +1,7 @@
 #!/usr/extra/bin/ksh
 # MAKEIT
 
+#BUILDTYPE=debug
 BUILDTYPE=develop
 #BUILDTYPE=deliver
 

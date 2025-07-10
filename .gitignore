@@ -62,5 +62,6 @@ r2
 .msgrc
 .swd
 .news_time
+.rsync*
 
 

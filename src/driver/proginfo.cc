@@ -19,23 +19,21 @@
 
 /*******************************************************************************
 
-	This group of subroutines help find and set from variables for program
-	start-up type functions.
-
+	This group of subroutines help find and set from variables
+	for program start-up type functions.
 
 *******************************************************************************/
 
-
 #include	<envstandards.h>	/* MUST be first to configure */
-
 #include	<sys/types.h>
 #include	<sys/param.h>
+#include	<cstddef>		/* |nullptr_t| */
 #include	<cstdlib>
 #include	<cstring>
-
 #include	<vsystem.h>
 #include	<vecstr.h>
 #include	<shellunder.h>
+#include	<rmx.h>
 #include	<localmisc.h>
 
 #include	"defs.h"
@@ -68,7 +66,6 @@ extern int	mkpath2(char *,cchar *,cchar *) ;
 extern int	mkpath2w(char *,cchar *,cchar *,int) ;
 extern int	sfdirname(cchar *,int,cchar **) ;
 extern int	sfbasename(cchar *,int,cchar **) ;
-extern int	rmext(cchar *,int) ;
 extern int	matstr(cchar **,cchar *,int) ;
 extern int	getnodename(char *,int) ;
 extern int	getpwd(char *,int) ;
@@ -819,27 +816,5 @@ static int proginfo_setdefpn(PROGINFO *pip)
 /* end subroutine (proginfo_setdefpn) */
 
 #endif /* COMMENT */
-
-
-static int hasourbad(cchar *sp,int sl)
-{
-	int		f = TRUE ;
-
-	if (sp != NULL) {
-	    if (! (f = hasprintbad(sp,sl))) {
-	        uint	sch ;
-	        int	i ;
-	        if (sl < 0) sl = strlen(sp) ;
-	        for (i = 0 ; i < sl ; i += 1) {
-	            sch = (sp[i] & 0xff) ;
-	            f = (sch >= 128) ;
-	            if (f) break ;
-	        } /* end for */
-	    } /* end if */
-	} /* end if */
-
-	return f ;
-}
-/* end subroutine (hadourbad) */
 
 

@@ -1,0 +1,27 @@
+#!/usr/extra/bin/ksh
+# MKSUBDIRS
+
+for SUB in lib inc mod ; do
+  ls | while read D ; do
+    if [[ -d $D ]] ; then
+      if [[ -e ${D}/${SUB} ]] ; then :
+      else
+        print -- D=${D}
+        ln -s ../../${SUB} ${D}/${SUB}
+      fi
+    fi
+  done
+done
+
+  SUB=gcm.cache
+  ls | while read D ; do
+    if [[ -d $D ]] ; then
+      if [[ -e ${D}/${SUB} ]] ; then :
+      else
+        print -- D=${D}
+        ln -s ../../var/${SUB} ${D}/${SUB}
+      fi
+    fi
+  done
+
+

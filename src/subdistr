@@ -1,0 +1,29 @@
+#!/usr/extra/bin/ksh
+# SUBDIST
+
+
+#
+# Synopsis:
+#
+#
+
+PN=${0##*/}
+DN=/dev/null
+
+for N in ${@} ; do
+  if [[ -r "${N}" ]] ; then
+    ls | while read D ; do
+      if [[ -d "${D}" ]] ; then
+        if [[ -r ${D}/${N} ]] ; then
+          if [[ ${N} -ef ${D}/${N} ]] ; then :
+	  else
+            ln -f ${N} ${D}
+	  fi
+        else
+          ln ${N} ${D}
+	fi
+      fi
+    done
+  fi
+done
+

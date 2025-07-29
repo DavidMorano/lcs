@@ -1,0 +1,25 @@
+#!/usr/extra/bin/ksh
+# SYNCINCS
+files_d | while read D ; do
+  find $D -type f -mtime -120 -name '*.h*' -print | while read N ; do
+    BN=${N##*/}
+    IN=include/${BN}
+    if [[ -f ${IN} ]] ; then
+      if [[ $N -ef ${IN} ]] ; then 
+        print -- YES
+      else
+        print -- NO 
+        li $N $IN
+        ln -f $N include
+      fi
+    else 
+      print -- "linking to INCLUDE ${N}"
+      ln $N $IN
+    fi
+    if [[ -r $BN ]] ; then
+      li $N $BN
+      rm $BN
+    fi
+  done
+done
+

@@ -6,8 +6,7 @@ BUILDTYPE=develop
 #BUILDTYPE=deliver
 
 
-#export REPOROOT=$( reporoot )
-export REPOROOT=${HOME}/github/system
+export REPOROOT=$( reporoot )
 
 PN=${0##/*}
 ex=0
@@ -30,24 +29,26 @@ export OSNAME OSTYPE OSRELEASE OSNUM
 
 
 integer i=0
-typeset -a DIRS
-DIRS[i++]=${GH}/other/include
-DIRS[i++]=${GH}/system/include
-DIRS[i++]=${GH}/test/include
-DIRS[i++]=${GH}/research/include
+typeset -a dirs
+dirs[i++]=${GH}/${REPOROOT}/inc
+dirs[i++]=${GH}/other/inc
+dirs[i++]=${GH}/system/inc
+dirs[i++]=${GH}/test/inc
+dirs[i++]=${GH}/research/inc
 
 VPATH=
-for (( i = 0 ; i < ${#DIRS[@]} ; i += 1 )) ; do
+for (( i = 0 ; i < ${#dirs[@]} ; i += 1 )) ; do
   if [[ $i > 0 ]] ; then
     VPATH+=":"
   fi
-  VPATH+="${DIRS[i]}"
+  VPATH+="${dirs[i]}"
 done
 export VPATH
 
 
 : ${CGS_BINDIR:=${REPOROOT}/bin}
-: ${CGS_INCDIR:=${REPOROOT}/include}
+: ${CGS_INCDIR:=${REPOROOT}/inc}
+: ${CGS_MODDIR:=${REPOROOT}/mod}
 : ${CGS_LIBDIR:=${REPOROOT}/lib}
 : ${CGS_MANDIR:=${REPOROOT}/man}
 
@@ -83,6 +84,7 @@ export CGS_BINDIR
 export CGS_INCDIR
 export CGS_CRTDIR
 export CGS_VALDIR
+export CGS_MODDIR
 export CGS_LIBDIR
 export CGS_MANDIR
 export CGS_RUNDIR
@@ -187,19 +189,13 @@ export CO_GXXOPT
 export CO_GXXLIB
 
 
-: ${BINDIR:=${REPOROOT}/bin}
-: ${INCDIR:=${REPOROOT}/include}
-: ${LIBDIR:=${REPOROOT}/lib}
-: ${MANDIR:=${REPOROOT}/man}
-: ${INFODIR:=${REPOROOT}/info}
-: ${HELPDIR:=${REPOROOT}/share/help}
-
-export BINDIR
-export INCDIR
-export LIBDIR
-export MANDIR
-export INFODIR
-export HELPDIR
+export BINDIR=${REPOROOT}/bin
+export INCDIR=${REPOROOT}/inc
+export MODDIR=${REPOROOT}/mod
+export LIBDIR=${REPOROOT}/lib
+export MANDIR=${REPOROOT}/man
+export INFODIR=${REPOROOT}/info
+export HELPDIR=${REPOROOT}/share/help
 
 export CRTDIR=${CGS_CRTDIR}
 export VALDIR=${CGS_VALDIR}
@@ -257,8 +253,16 @@ export MAKELDFLAGS
 
 #print -- CGS_CC=${CGS_CC}
 #print -- CGS_GXX=${CGS_GXX}
+
+#print -- CGS_BINDIR=${CGS_BINDIR:=${REPOROOT}/bin}
+#print -- CGS_INCDIR=${CGS_INCDIR:=${REPOROOT}/inc}
+#print -- CGS_MODDIR=${CGS_MODDIR:=${REPOROOT}/mod}
+#print -- CGS_LIBDIR=${CGS_LIBDIR:=${REPOROOT}/lib}
+
 #print -- REPOROOT=${REPOROOT}
+#print -- BINDIR=${BINDIR}
 #print -- INCDIR=${INCDIR}
+#print -- MODDIR=${MODDIR}
 #print -- LIBDIR=${LIBDIR}
 
 export PATH=${REPOROOT}/bin:${PATH}

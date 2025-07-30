@@ -1,0 +1,27 @@
+#!/usr/extra/bin/ksh
+# FIXCPLUSPLUSINCS
+
+DN=/dev/null
+
+for F in "${@}" ; do
+  if [[ -r "${F}" ]] ; then
+    if fgr -q '.h' $F ; then
+      ed - $F <<\EOF
+g/errno.h/s//cerrno/g
+g/signal.h/s//csignal/g
+g/limits.h/s//climits/g
+g/stddef.h/s//cstddef/g
+g/stdlib.h/s//cstdlib/g
+g/stdlib.h/s//cstdint/g
+g/stdlib.h/s//cstdints/g
+g/stdio.h/s//cstdio/g
+g/stdarg.h/s//cstdarg/g
+g/string.h/s//cstring/g
+	w
+	q
+EOF
+    fi
+  fi
+done
+
+

@@ -9,7 +9,7 @@ BUILDTYPE=develop
 export REPOROOT=$( reporoot )
 
 PN=${0##/*}
-ex=0
+integer ex=0
 if [[ -z "${REPOROOT}" ]] ; then
   print -u 2 -- "${PN}: no REPO root"
   ex=1
@@ -38,10 +38,13 @@ dirs[i++]=${GH}/research/inc
 
 VPATH=
 for (( i = 0 ; i < ${#dirs[@]} ; i += 1 )) ; do
-  if [[ $i > 0 ]] ; then
-    VPATH+=":"
+  incdir+="${dirs[i]}/inc"
+  if [[ -d ${incdir} ]] ; then
+      if [[ $i > 0 ]] ; then
+        VPATH+=":"
+      fi
+      VPATH+="${dirs[i]}"
   fi
-  VPATH+="${dirs[i]}"
 done
 export VPATH
 
@@ -266,6 +269,7 @@ export MAKELDFLAGS
 #print -- LIBDIR=${LIBDIR}
 
 export PATH=${REPOROOT}/bin:${PATH}
-make "${@}"
+make "${@}" ; ex=${?}
 
+return ${ex}
 

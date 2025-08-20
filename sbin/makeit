@@ -2,11 +2,12 @@
 # MAKEIT
 
 #BUILDTYPE=debug
-BUILDTYPE=develop
+: ${BUILDTYPE:=develop}
 #BUILDTYPE=deliver
 
 
 export REPOROOT=$( reporoot )
+#export REPOROOT=${HOME}/github/system
 
 PN=${0##/*}
 integer ex=0

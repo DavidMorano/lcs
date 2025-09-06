@@ -10,7 +10,7 @@ export REPOROOT=$( reporoot )
 #export REPOROOT=${HOME}/github/system
 #export REPOROOT=${HOME}/github/other
 
-PN=${0##/*}
+PN=${0##*/}
 integer ex=0
 if [[ -z "${REPOROOT}" ]] ; then
   print -u 2 -- "${PN}: no REPO root"

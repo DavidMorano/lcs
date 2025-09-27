@@ -50,7 +50,7 @@
 #include	<cstring>
 #include	<cstdlib>
 
-#include	<vsystem.h>
+#include	<usystem.h>
 #include	<bfile.h>
 #include	<bitops.h>
 #include	<localmisc.h>

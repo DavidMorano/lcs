@@ -31,7 +31,7 @@
 #include	<cstring>
 #include	<cstdlib>
 
-#include	<vsystem.h>
+#include	<usystem.h>
 #include	<baops.h>
 #include	<localmisc.h>
 

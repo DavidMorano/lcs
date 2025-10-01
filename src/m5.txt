@@ -1,0 +1,24 @@
+.c.i:
+	$(CPP) $(CPPFLAGS) $< > $(*).i
+
+.cc.ii:
+	$(CPP) $(CPPFLAGS) $< > $(*).ii
+
+.ccm.iim:
+	$(CPP) $(CPPFLAGS) $< > $(*).iim
+
+.c.s:
+	$(CC) -S $(CPPFLAGS) $(CFLAGS) $<
+
+.cc.s:
+	$(CXX) -S $(CPPFLAGS) $(CXXFLAGS) $<
+
+.c.o:
+	$(COMPILE.c) $<
+
+.cc.o:
+	$(COMPILE.cc) $<
+
+.ccm.o:
+	makemodule $(*)
+

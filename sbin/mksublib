@@ -1,0 +1,14 @@
+#!/usr/extra/bin/ksh
+# MKSUBLIB
+
+files_d | while read D ; do 
+  print -- D=${D}
+  if [[ -L ${D}/lib ]] ; then
+    print Y
+  else
+    print N
+    ln -s ../lib ${D}/lib
+  fi
+done
+
+

@@ -24,7 +24,22 @@
 
 *.swp
 
-todo.txt
+.DS_Store
+.git
+.gitattributes
+.gitnotes
+.tags
+.reporoot
+.repo
+.kshrc
+.profile
+.bbnewsrc
+.fullname
+.msgrc
+.swd
+.news_time
+.rsync*
+
 tags
 change
 changer
@@ -53,21 +68,18 @@ c2
 r1
 r2
 
-.DS_Store
-.git
-.gitattributes
-.gitnotes
-.tags
+o.c
+o.cc
+o.ccm
+o.h
+o.hh
 
-.reporoot
-.repo
-.kshrc
-.profile
-.bbnewsrc
-.fullname
-.msgrc
-.swd
-.news_time
-.rsync*
+oo.c
+oo.cc
+oo.ccm
+oo.h
+oo.hh
+
+todo.txt
 
 

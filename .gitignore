@@ -1,3 +1,12 @@
+# GITIGNORE
+
+# Description:
+#
+# This file contains patters that should be ignored by the any 
+# GIT commands.
+#
+
+# these are our object-type files
 *.o
 *.a
 *.so
@@ -11,23 +20,34 @@
 *.gcm
 *.dylib
 
+# ignore TAR and compressed TAR files
 *.tar
 *.tar.bz2
 
+# ignore CPIO and compressed CPIO files
 *.ca
 *.ca.bz2
+*.cpio
+*.cpio.bz2
 
+# ignore regular compressed files
 *.gz
 *.bz2
 *.z
 *.Z
 
+# ignore VIM "swap" files
 *.swp
 
+# ignore the macOS Finder metadata storage file
 .DS_Store
+
+# ignore some GIT-related files
 .git
 .gitattributes
 .gitnotes
+
+# ignore various common 'dot' files
 .tags
 .reporoot
 .repo
@@ -40,16 +60,20 @@
 .news_time
 .rsync*
 
+# ignore some files related to development
 tags
 change
 changer
 
+# ignore some that are related to development
 x
 so
 a
 o
 d
 e
+
+# these are 'tmp' files in development
 oa
 ob
 oc
@@ -64,23 +88,27 @@ o1
 o2
 o3
 
+# more 'tmp' files in development
 c1
 c2
 r1
 r2
 
+# more 'tmp' files in development
 o.c
 o.cc
 o.ccm
 o.h
 o.hh
 
+# more 'tmp' files in development
 oo.c
 oo.cc
 oo.ccm
 oo.h
 oo.hh
 
+# this is a common development file that tracks general activity
 todo.txt
 
 

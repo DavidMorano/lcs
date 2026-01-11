@@ -43,7 +43,7 @@
 #include	<sys/types.h>
 #include	<sys/stat.h>
 #include	<fcntl.h>
-#include	<time.h>
+#include	<ctime>
 #include	<ctype.h>
 #include	<cstring>
 #include	<cstdlib>

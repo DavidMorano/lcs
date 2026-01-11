@@ -35,10 +35,10 @@
 #include	<sys/stat.h>
 #include	<sys/param.h>
 #include	<sys/times.h>
-#include	<sys/time.h>
+#include	<sys/ctime>
 #include	<climits>
 #include	<fcntl.h>
-#include	<time.h>
+#include	<ctime>
 #include	<ctype.h>
 #include	<cstring>
 #include	<cstdlib>

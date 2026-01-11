@@ -43,7 +43,7 @@
 #include	<sys/stat.h>
 #include	<sys/times.h>
 #include	<climits>
-#include	<time.h>
+#include	<ctime>
 #include	<cstring>
 #include	<cstdlib>
 

@@ -30,7 +30,7 @@
 #include	<sys/times.h>
 #include	<climits>
 #include	<fcntl.h>
-#include	<time.h>
+#include	<ctime>
 #include	<ctype.h>
 #include	<cstring>
 #include	<cstdlib>

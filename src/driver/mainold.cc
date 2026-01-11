@@ -36,9 +36,9 @@
 #include	<sys/param.h>
 #include	<sys/stat.h>
 #include	<sys/times.h>
-#include	<sys/time.h>
+#include	<sys/ctime>
 #include	<climits>
-#include	<time.h>
+#include	<ctime>
 #include	<cstring>
 #include	<cstdlib>
 

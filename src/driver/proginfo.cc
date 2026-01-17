@@ -30,7 +30,9 @@
 #include	<cstddef>		/* |nullptr_t| */
 #include	<cstdlib>
 #include	<cstring>
-#include	<usystem.h>
+#include	<clanguage.h>
+#include	<usysbase.h>
+#include	<getx.h>
 #include	<vecstr.h>
 #include	<shellunder.h>
 #include	<rmx.h>
@@ -60,19 +62,6 @@
 
 /* external subroutines */
 
-extern int	sncpy1(char *,int,cchar *) ;
-extern int	mkpath1(char *,cchar *) ;
-extern int	mkpath2(char *,cchar *,cchar *) ;
-extern int	mkpath2w(char *,cchar *,cchar *,int) ;
-extern int	sfdirname(cchar *,int,cchar **) ;
-extern int	sfbasename(cchar *,int,cchar **) ;
-extern int	matstr(cchar **,cchar *,int) ;
-extern int	getnodename(char *,int) ;
-extern int	getpwd(char *,int) ;
-extern int	getev(cchar **,cchar *,int,cchar **) ;
-extern int	hasprintbad(cchar *,int) ;
-extern int	hasuc(cchar *,int) ;
-
 #if	CF_DEBUGS
 extern int	debugprintf(cchar *,...) ;
 #endif
@@ -80,13 +69,6 @@ extern int	debugprintf(cchar *,...) ;
 #if	CF_DEBUGN
 extern int	nprintf(cchar *,cchar *,...) ;
 #endif
-
-extern char	*getourenv(cchar **,cchar *) ;
-extern char	*strwcpy(char *,cchar *,int) ;
-extern char	*strwcpylc(char *,cchar *,int) ;
-extern char	*strwcpyuc(char *,cchar *,int) ;
-extern char	*strnchr(cchar *,int,int) ;
-extern char	*strnrchr(cchar *,int,int) ;
 
 
 /* forward references */

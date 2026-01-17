@@ -1,11 +1,12 @@
-/* main */
+/* main SUPPORT */
+/* charset=ISO8859-1 */
+/* lang=C++20 (conformance reviewed) */
 
 /* main subroutine for a Local Search LCS algorithm */
-
+/* version %I% last-modified %G% */
 
 #define	F_DEBUGS	0
 #define	F_DEBUG		0
-
 
 /* revision history :
 
@@ -14,42 +15,38 @@
 
 */
 
-
 /*******************************************************************
 
-	This is the main subroutine for a LCS algorithm.
-	This subroutine will parse the input arguments
-	and create a data structure with the input strings in
-	it.
+  	Description:
+	This is the main subroutine for a LCS algorithm.  This
+	subroutine will parse the input arguments and create a data
+	structure with the input strings in it.
 
-	Program Synopsis :
-
+	Program Synopsis:
 	program [file(s) ...] [-V] [-v[=level]]
-
 
 *********************************************************************/
 
-
-
+#include	<envstandards.h>	/* ordered first to configure */
 #include	<sys/types.h>
 #include	<sys/stat.h>
 #include	<sys/param.h>
 #include	<sys/times.h>
-#include	<sys/ctime>
-#include	<climits>
+#include	<sys/time.h>
 #include	<fcntl.h>
 #include	<ctime>
-#include	<ctype.h>
+#include	<climits>
+#include	<cstddef>		/* |nullptr_t| */
+#include	<cstdlib>		/* |getenv(3c)| */
 #include	<cstring>
-#include	<cstdlib>
-
+#include	<clanguage.h>
+#include	<usysbase.h>
 #include	<bio.h>
 #include	<bitops.h>
 
 #include	"misc.h"
 #include	"config.h"
 #include	"defs.h"
-
 
 
 /* defines */
@@ -60,7 +57,6 @@
 #define		NARGPRESENT	(MAXARGINDEX/8 + 1)
 #define		LINELEN		200
 #define		BUFLEN		(MAXPATHLEN + (2 * LINELEN))
-
 
 
 /* externals */

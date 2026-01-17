@@ -1,12 +1,12 @@
 /* main (random3) */
+/* charset=ISO8859-1 */
 /* lang=C++98 */
 
 /* main subroutine for a Local Search LCS algorithm */
-
+/* version %I% last-modified %G% */
 
 #define	CF_DEBUGS	0		/* compile-time debugging */
 #define	CF_DEBUG	0		/* run-time debugging */
-
 
 /* revision history:
 
@@ -19,30 +19,29 @@
 
 /*******************************************************************************
 
-        This is the main subroutine for a LCS algorithm. This subroutine will
-        parse the input arguments and create a data structure with the input
-        strings in it.
+  	Description:
+	This is the main subroutine for a LCS algorithm. This
+	subroutine will parse the input arguments and create a data
+	structure with the input strings in it.
 
 	Synopsis:
 	$ program [file(s) ...] [-V] [-v[=level]]
 
-
 *******************************************************************************/
 
-
 #include	<envstandards.h>
-
 #include	<sys/types.h>
 #include	<sys/param.h>
 #include	<sys/stat.h>
 #include	<sys/times.h>
-#include	<sys/ctime>
-#include	<climits>
+#include	<sys/time.h>
 #include	<ctime>
+#include	<climits>
+#include	<cstddef>		/* |nullptr_t| */
+#include	<cstdlib>		/* |getenv(3c)| */
 #include	<cstring>
-#include	<cstdlib>
-
-#include	<usystem.h>
+#include	<clanguage.h>
+#include	<usysbase.h>
 #include	<bfile.h>
 #include	<baops.h>
 #include	<cfdec.h>

@@ -17,23 +17,21 @@
 
 /*******************************************************************
 
+  	Description:
 	This program will find the longest common sequence
 	given a file with strings in it.
 
 	Synopsis :
-
 	ampl [file(s) ...] [-V] [-v[=level]]
-
 
 *********************************************************************/
 
-
-
+#include	<envstandards.h>	/* ordered first to configure */
 #include	<sys/types.h>
 #include	<sys/stat.h>
 #include	<sys/param.h>
 #include	<sys/times.h>
-#include	<sys/ctime>
+#include	<sys/time.h>
 #include	<climits>
 #include	<fcntl.h>
 #include	<ctime>

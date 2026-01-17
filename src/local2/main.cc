@@ -17,25 +17,23 @@
 
 /*******************************************************************
 
+  	Description:
 	This is the main subroutine for a LCS algorithm.
 	This subroutine will parse the input arguments
 	and create a data structure with the input strings in
 	it.
 
 	Program Synopsis :
-
 	program [file(s) ...] [-V] [-v[=level]]
-
 
 *********************************************************************/
 
-
-
+#include	<envstandards.h>	/* ordered first to configure */
 #include	<sys/types.h>
 #include	<sys/stat.h>
 #include	<sys/param.h>
 #include	<sys/times.h>
-#include	<sys/ctime>
+#include	<sys/time.h>
 #include	<climits>
 #include	<fcntl.h>
 #include	<ctime>

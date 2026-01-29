@@ -111,4 +111,7 @@ oo.hh
 # this is a common development file that tracks general activity
 todo.txt
 
+# ignore these temporary files
+v[0-9][a-z]*.[ch]*
+
 

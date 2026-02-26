@@ -46,7 +46,7 @@
 #include	<cstring>
 #include	<cstdlib>
 
-#include	<bio.h>
+#include	<bfile.h>
 #include	<bitops.h>
 
 #include	"misc.h"

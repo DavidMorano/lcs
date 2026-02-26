@@ -41,7 +41,7 @@
 #include	<cstring>
 #include	<clanguage.h>
 #include	<usysbase.h>
-#include	<bio.h>
+#include	<bfile.h>
 #include	<bitops.h>
 
 #include	"misc.h"

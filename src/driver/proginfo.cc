@@ -1,12 +1,13 @@
-/* proginfo */
+/* proginfo SUPPORT */
+/* charset=ISO8859-1 */
+/* lang=C++20 */
 
 /* program information */
-
+/* version %I% last-modified %G% */
 
 #define	CF_DEBUGS	0		/* compile-time debugging */
 #define	CF_DEBUGN	0		/* non-switchable debug print-outs */
 #define	CF_GETEXECNAME	1		/* use 'getexecname()' */
-
 
 /* revision history:
 
@@ -19,6 +20,7 @@
 
 /*******************************************************************************
 
+	Description:
 	This group of subroutines help find and set from variables
 	for program start-up type functions.
 
@@ -581,10 +583,9 @@ int proginfo_progename(PROGINFO *pip)
 	    }
 
 	    if ((rs >= 0) && (efn == NULL) && (efn[0] != '\0')) {
-		cchar	*cp ;
-	        if ((cp = getourenv(pip->envv,VARUNDER)) != NULL) {
-		    if (shellunder(&su,cp) >= 0) {
-	                efn = su.progename ;
+		if (cchar *cp = getourenv(pip->envv,VARUNDER) ; cp) {
+		    if (shellunder_dat su ; shellunder(&su,cp) >= 0) {
+	                efn = su.execname ;
 		    }
 	        }
 	    }

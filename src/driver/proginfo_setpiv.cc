@@ -1,12 +1,12 @@
-/* proginfo_setpiv */
+/* proginfo_setpiv SUPPORT */
+/* charset=ISO8859-1 */
+/* lang=C++20 (conformance reviewed) */
 
 /* utility for KSH built-in commands */
 /* last modified %G% version %I% */
 
-
 #define	CF_DEBUGS	0		/* compile-time debugging */
 #define	CF_DEBUG	0		/* switchable at invocation */
-
 
 /* revision history:
 
@@ -19,78 +19,58 @@
 
 /*******************************************************************************
 
-        This subroutine is used for acquiring the program-root for a program.
+  	Name:
+	proginfo_setpiv
+
+	Description:
+	This subroutine is used for acquiring (setting) the
+	program-root for KSH built-in commands.
 
 	Synopsis:
-
-	int proginfo_setpiv(pip,pr,vars)
-	PROGINFO	*pip ;
-	cchar		pr[] ;
-	struct pivars	*vars ;
+	int proginfo_setpiv(proginfo *pip,cchar *pr,pivars *vars) noex
 
 	Arguments:
-
 	pip		program-information pointer
 	pr		program root
 	vars		array of program parameters
 
 	Returns:
-
-	<0	error
 	>=0	length of PR
-
+	<0	error (system-return)
 
 *******************************************************************************/
 
-
 #include	<envstandards.h>	/* MUST be first to configure */
-
 #include	<sys/types.h>
 #include	<sys/param.h>
-#include	<climits>
 #include	<unistd.h>
+#include	<climits>
+#include	<cstddef>		/* |nullptr_t| */
 #include	<cstdlib>
 #include	<cstring>
-
-#include	<usystem.h>
+#include	<clanguage.h>
+#include	<usysbase.h>
+#include	<getx.h>
 #include	<ids.h>
+#include	<sfx.h>
+#include	<snx.h>
+#include	<mkpathx.h>
+#include	<mkpr.h>		/* |getrootdname(3uc)| */
+#include	<permx.h>		/* |permid(3uc)| */
 #include	<localmisc.h>
+#include	<libdebug.h>
 
 #include	"defs.h"
 
 
 /* local defines */
 
-#ifndef	DEBUGLEVEL
-#define	DEBUGLEVEL(n)	(pip->debuglevel >= (n))
-#endif
+#define	PI	proginfo
 
 
 /* external subroutines */
 
-extern int	sncpy2(char *,int,cchar *,cchar *) ;
-extern int	sncpy3(char *,int,cchar *,cchar *,cchar *) ;
-extern int	mkpath2(char *,cchar *,cchar *) ;
-extern int	mkpath3(char *,cchar *,cchar *,cchar *) ;
-extern int	sfshrink(cchar *,int,cchar **) ;
-extern int	sfbasename(cchar *,int,cchar **) ;
-extern int	sfdirname(cchar *,int,cchar **) ;
-extern int	cfdeci(cchar *,int,int *) ;
-extern int	cfdecui(cchar *,int,uint *) ;
-extern int	getnodedomain(char *,char *) ;
-extern int	getrootdname(char *,int,cchar *,cchar *) ;
-extern int	permid(IDS *,ustat *,int) ;
-extern int	isNotPresent(int) ;
-
-extern int	proginfo_getenv(PROGINFO *,cchar *,int,cchar **) ;
-
-#if	CF_DEBUGS || CF_DEBUG
-extern int	debugprintf(cchar *,...) ;
-extern int	debugprinthex(cchar *,int,cchar *,int) ;
-extern int	strlinelen(cchar *,int,int) ;
-#endif
-
-extern char	*strwcpy(char *,cchar *,int) ;
+extern int	proginfo_getenv(PROGINFO *,cchar *,int,cchar **) noex ;
 
 
 /* external variables */
@@ -101,40 +81,28 @@ extern char	*strwcpy(char *,cchar *,int) ;
 
 /* forward references */
 
-static int	proginfo_setpiver(PROGINFO *,IDS *,cchar *,struct pivars *) ;
+local int	proginfo_setpiver(PI *,ids *,cchar *,pivars *) noex ;
 
-static int	sfrootdirname(cchar *,int,cchar **) ;
+local int	sfrootdirname(cchar *,int,cchar **) noex ;
 
-static int	dircheck(IDS *,cchar *) ;
-static int	isNotGoodDir(int) ;
+local int	dircheck(ids *,cchar *) noex ;
+local bool	isNotGoodDir(int) noex ;
 
 
 /* local variables */
 
 
+/* exported variables */
+
+
 /* exported subroutines */
 
-
-int proginfo_setpiv(PROGINFO *pip,cchar *pr,struct pivars *vars)
-{
-	IDS		id ;
+int proginfo_setpiv(PI *pip,cchar *pr,pivars *vars) noex {
 	int		rs ;
-
-#if	CF_DEBUG
-	if (DEBUGLEVEL(3))
-	debugprintf("proginfo_setpiv: ent\n") ;
-#endif
-
-	if ((rs = ids_load(&id)) >= 0) {
+	if (ids id ; (rs = ids_load(&id)) >= 0) {
 	    rs = proginfo_setpiver(pip,&id,pr,vars) ;
 	    ids_release(&id) ;
 	} /* end if (ids) */
-
-#if	CF_DEBUG
-	if (DEBUGLEVEL(3))
-	debugprintf("proginfo_setpiv: ret rs=%d\n",rs) ;
-#endif
-
 	return rs ;
 }
 /* end subroutine (proginfo_setpiv) */
@@ -142,10 +110,8 @@ int proginfo_setpiv(PROGINFO *pip,cchar *pr,struct pivars *vars)
 
 /* local subroutines */
 
-
-int proginfo_setpiver(PROGINFO *pip,IDS *idp,cchar *pr,struct pivars *vars)
-{
-	const int	plen = MAXPATHLEN ;
+int proginfo_setpiver(PI *pip,ids *idp,cchar *pr,pivars *vars) noex {
+	cint	plen = MAXPATHLEN ;
 	int		rs = SR_OK ;
 	int		rs1 ;
 	int		pl = -1 ;
@@ -294,16 +260,15 @@ int proginfo_setpiver(PROGINFO *pip,IDS *idp,cchar *pr,struct pivars *vars)
 }
 /* end subroutine (proginfo_setpiver) */
 
-
-static int sfrootdirname(cchar *dp,int dl,cchar **rpp)
-{
+local int sfrootdirname(char *dp,int dl,cchar **rpp) noex {
 	int		bl ;
 	int		sl = -1 ;
 	int		f ;
-	cchar		*sp = NULL ;
-	cchar		*bp ;
+	cchar	*sp = NULL ;
+	cchar	*bp ;
 
-	if (rpp != NULL) *rpp = NULL ;
+	if (rpp != NULL)
+	    *rpp = NULL ;
 
 #if	CF_DEBUGS
 	debugprintf("sfrootdirname: d=%t\n",dp,dl) ;
@@ -317,9 +282,8 @@ static int sfrootdirname(cchar *dp,int dl,cchar **rpp)
 
 	f = ((bl == 3) && (strncmp(bp,"bin",bl) == 0)) ;
 
-	if (! f) {
+	if (! f)
 	    f = ((bl == 4) && (strncmp(bp,"sbin",bl) == 0)) ;
-	}
 
 #if	CF_DEBUGS
 	debugprintf("sfrootdirname: f=%u\n",f) ;
@@ -341,14 +305,11 @@ static int sfrootdirname(cchar *dp,int dl,cchar **rpp)
 }
 /* end subroutine (sfrootdirname) */
 
-
-static int dircheck(IDS *idp,cchar *dname)
-{
-	ustat	sb ;
+local int dircheck(ids *idp,cchar *dname) noex {
 	int		rs ;
-	if ((rs = u_stat(dname,&sb)) >= 0) {
+	if (ustat sb ; (rs = u_stat(dname,&sb)) >= 0) {
 	    if (S_ISDIR(sb.st_mode)) {
-	        const int	am = (R_OK|X_OK) ;
+	        cint	am = (R_OK|X_OK) ;
 	        rs = permid(idp,&sb,am) ;
 	    } else {
 	        rs = SR_NOTDIR ;
@@ -358,10 +319,8 @@ static int dircheck(IDS *idp,cchar *dname)
 }
 /* end subroutine (dircheck) */
 
-
-static int isNotGoodDir(int rs)
-{
-	int		f = FALSE ;
+local bool isNotGoodDir(int rs) noex {
+	bool f = FALSE ;
 	f = f || isNotPresent(rs) ;
 	f = f || (rs == SR_NOTDIR) ;
 	return f ;

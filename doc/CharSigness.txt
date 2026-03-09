@@ -1,0 +1,25 @@
+CharSigness
+
+The C and C++ programming language |char| type (as everuone knows)
+can be either a signed integer type or an unsigned ineger type,
+depending on the connention of the platformmr one is on and the
+compiler used.
+
+The following platforms are known to have the following defaults:
+
+platform	compiler	disposition
+--------------------------------------------------------------------------------
+
+Apple-Mac-x86	CLANG		signed
+Apple-Mac-Arm	CLANG		signed
+
+Apple-Mac-x86	GCC		signed
+Apple-Mac-Arm	GCC		signed
+
+other-x86	CLANG		unsigned
+other-Arm	CLANG		unsigned
+
+other-x86	GCC		unsigned
+other-Arm	GCC		unsigned
+
+

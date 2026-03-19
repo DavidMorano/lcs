@@ -20,6 +20,9 @@
 *.gcm
 *.dylib
 
+# other undesireables
+*.bin
+
 # ignore TAR and compressed TAR files
 *.tar
 *.tar.bz2

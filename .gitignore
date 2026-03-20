@@ -22,6 +22,8 @@
 
 # other undesireables
 *.bin
+*.cache
+*.save
 
 # ignore TAR and compressed TAR files
 *.tar

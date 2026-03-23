@@ -49,7 +49,6 @@
 
 # ignore some GIT-related files
 .git
-.gitattributes
 .gitnotes
 
 # ignore various common 'dot' files

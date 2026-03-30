@@ -69,6 +69,10 @@ tags
 change
 changer
 
+# these are code template (that often change)
+magic.txt
+ctor.txt
+
 # ignore some that are related to development
 x
 so

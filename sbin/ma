@@ -146,8 +146,8 @@ Darwin:*)
     CO_GXXOPT="-g"
     ;;
   deliver)
-    CO_GCCOPT="-O"
-    CO_GXXOPT="-O"
+    CO_GCCOPT="-O3"
+    CO_GXXOPT="-O3"
     ;;
   esac
   ;;

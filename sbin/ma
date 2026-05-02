@@ -146,8 +146,8 @@ Darwin:*)
     CO_GXXOPT="-g"
     ;;
   deliver)
-    CO_GCCOPT="-O3"
-    CO_GXXOPT="-O3"
+    CO_GCCOPT="-O2"
+    CO_GXXOPT="-O2"
     ;;
   esac
   ;;
@@ -157,15 +157,15 @@ SunOS:*)
   sparc)
     CO_GCOPARC="-mcpu=v9"
     CO_GCCLIBSPARC="-mno-app-regs "
-    : ${CO_GCCOPT:="-O3 ${CO_GCOPARC}"}
+    : ${CO_GCCOPT:="-O2 ${CO_GCOPARC}"}
     : ${CO_GCCLIB:="-fpic ${CO_GCCLIBSPARC}"}
     ;;
   *)
-    : ${CO_GCCOPT:="-O3"}
+    : ${CO_GCCOPT:="-O2"}
     : ${CO_GCCLIB:="-fpic"}
     ;;
   esac
-  : ${CO_GCCOPT:="-O3"}
+  : ${CO_GCCOPT:="-O2"}
   : ${CO_GCCLIB:="-fpic"}
   : ${CO_CCALL:="-MT"}
   : ${CO_CCOPT:="-O"}

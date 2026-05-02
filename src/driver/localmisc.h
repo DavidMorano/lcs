@@ -398,25 +398,25 @@ typedef const char		cc ;
 #ifndef	SUBROUTINE_LEQUIV
 #define	SUBROUTINE_LEQUIV
 
-static inline bool lequiv(bool a1,bool a2) noex {
+local inline bool lequiv(bool a1,bool a2) noex {
 	return LEQUIV(a1,a2) ;
-}
+} /* end subroutine */
 
-static inline bool lxor(bool a1,bool a2) noex {
+local inline bool lxor(bool a1,bool a2) noex {
 	return LXOR(a1,a2) ;
-}
+} /* end subroutine */
 
 #endif /* SUBROUTINE_LEQUIV */
 
 #ifdef	__cplusplus
-#else
+#else /* __splusplus */
 #ifndef	SUBROUTINE_MEMCLEAR
 #define	SUBROUTINE_MEMCLEAR
-static inline int memclear(void *objp,int sz) noex {
+local inline int memclear(void *objp,int sz) noex {
     	csize	objs = (size_t) sz ;
     	memset(objp,0,objs) ;
 	return sz ;
-}
+} /* end subroutine */
 #endif /* SUBROUTINE_MEMCLEAR */
 #endif /* __splusplus */
 

@@ -7,19 +7,35 @@ compiler used.
 
 The following platforms are known to have the following defaults:
 
-platform	compiler	disposition
+platform	compiler	disposition (default)
 --------------------------------------------------------------------------------
-
-Apple-Mac-x86	CLANG		signed
-Apple-Mac-Arm	CLANG		signed
 
 Apple-Mac-x86	GCC		signed
 Apple-Mac-Arm	GCC		signed
 
-other-x86	CLANG		unsigned
-other-Arm	CLANG		unsigned
+Apple-Mac-x86	CLANG		signed
+Apple-Mac-Arm	CLANG		signed
+
+Windows®	MSVC		signed
+Windows®	GCC		signed
+Windows®	GLANG		signed
+Windows®	other		signed
+
+x86-x86_64	Intel-C/C++	signed
+x86-x86_64	GCC		signed
+x86-x86_64	CLANG		signed
+c86-x86_64	Oracle-C/C++	signed
+SPARC		Oracle-C/C++	signed
+most-MIPS	-		signed
 
 other-x86	GCC		unsigned
 other-Arm	GCC		unsigned
+
+other-x86	CLANG		unsigned
+other-Arm	CLANG		unsigned
+
+ARM		-		unsigned
+PowerPC		-		unsigned
+AArch64		-		unsigned
 
 

@@ -29,7 +29,6 @@ export ARCHITECTURE SYSNAME RELEASE
 : ${OSNUM:=${RELEASE%%.*}}
 export OSNAME OSTYPE OSRELEASE OSNUM
 
-
 integer i=0
 typeset -a dirs
 dirs[i++]=${GH}/${REPOROOT}/inc
@@ -270,8 +269,9 @@ export MAKELDFLAGS
 #print -- MODDIR=${MODDIR}
 #print -- LIBDIR=${LIBDIR}
 
+CCM='$(CXX) -c -x c++ $(CXXFLAGS) $(CPPFLAGS) $(TARGET_ARCH)'
+
 export PATH=${REPOROOT}/bin:${PATH}
 make "${@}" ; ex=${?}
-
 return ${ex}
 

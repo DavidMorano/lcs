@@ -1,6 +1,7 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+*.terms	linguist-language=C++
 *.ccm	linguist-language=C++
 *.mm	linguist-language=Roff
 *.ms	linguist-language=Roff

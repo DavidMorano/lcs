@@ -68,6 +68,7 @@
 tags
 change
 changer
+ref
 
 # these are code templates (that often change)
 magic.txt
@@ -96,6 +97,8 @@ oo
 o1
 o2
 o3
+o4
+ooo
 
 # more 'tmp' files in development
 c1

@@ -41,31 +41,33 @@
 *******************************************************************************/
 
 #include	<envstandards.h>	/* MUST be first to configure */
-#include	<sys/types.h>
-#include	<sys/param.h>
-#include	<unistd.h>
-#include	<climits>
-#include	<cstddef>		/* |nullptr_t| */
-#include	<cstdlib>
-#include	<cstring>
-#include	<clanguage.h>
-#include	<usysbase.h>
+#include	<sys/types.h>		/* POSIX */
+#include	<sys/param.h>		/* POSIX */
+#include	<unistd.h>		/* POSIX */
+#include	<climits>		/* CSTD */
+#include	<cstddef>		/* CSTD */
+#include	<cstdlib>		/* CSTD */
+#include	<cstring>		/* CSTD */
+#include	<clanguage.h>		/* LIBU */
+#include	<usysbase.h>		/* LIBU */
 #include	<getx.h>
 #include	<ids.h>
 #include	<sfx.h>
 #include	<snx.h>
 #include	<mkpathx.h>
 #include	<mkpr.h>		/* |getrootdname(3uc)| */
-#include	<permx.h>		/* |permid(3uc)| */
-#include	<localmisc.h>
-#include	<libdebug.h>
+#include	<permx.h>		/* |permids(3uc)| */
+#include	<localmisc.h>		/* LIBU */
+#include	<libdebug.h>		/* LIBDEBUG |DEBUGPRINTF(3debug)| */
 
 #include	"defs.h"
 
 
 /* local defines */
 
+#ifndef	PI
 #define	PI	proginfo
+#endif
 
 
 /* external subroutines */
@@ -116,13 +118,13 @@ int proginfo_setpiver(PI *pip,ids *idp,cchar *pr,pivars *vars) noex {
 	int		rs1 ;
 	int		pl = -1 ;
 	int		prlen = 0 ;
-	cchar		*cp = NULL ;
+	cchar		*cp = nullptr ;
 	char		rdn[MAXPATHLEN + 1] ;
 
 #if	CF_DEBUG
 	if (DEBUGLEVEL(3)) {
 	    debugprintf("proginfo_setpiv: pr=%s\n",pr) ;
-	    if (vars != NULL) {
+	    if (vars != nullptr) {
 	        debugprintf("proginfo_setpiv: vpr1=%s\n",vars->vpr1) ;
 	        debugprintf("proginfo_setpiv: vpr2=%s\n",vars->vpr2) ;
 	        debugprintf("proginfo_setpiv: vpr3=%s\n",vars->vpr3) ;
@@ -132,13 +134,13 @@ int proginfo_setpiver(PI *pip,ids *idp,cchar *pr,pivars *vars) noex {
 	}
 #endif /* CF_DEBUG */
 
-	if (pr == NULL) {
+	if (pr == nullptr) {
 	    int	i ;
 
 	    pl = -1 ;
 	    rs1 = SR_NOTFOUND ;
 	    for (i = 1 ; (rs >= 0) && isNotGoodDir(rs1) && (i <= 3) ; i += 1) {
-	        cchar	*var  = NULL ;
+	        cchar	*var  = nullptr ;
 	        switch (i) {
 	        case 1:
 	            var = vars->vpr1 ;
@@ -150,7 +152,7 @@ int proginfo_setpiver(PI *pip,ids *idp,cchar *pr,pivars *vars) noex {
 	            var = vars->vpr3 ;
 	            break ;
 	        } /* end switch */
-	        if ((var != NULL) && (var[0] != '\0')) {
+	        if ((var != nullptr) && (var[0] != '\0')) {
 	            if ((rs1 = proginfo_getenv(pip,var,-1,&cp)) >= 0) {
 	                rs1 = dircheck(idp,cp) ;
 	                if (! isNotGoodDir(rs1)) rs = rs1 ;
@@ -161,7 +163,7 @@ int proginfo_setpiver(PI *pip,ids *idp,cchar *pr,pivars *vars) noex {
 	    if (rs1 >= 0) pr = cp ;
 	} /* end if (straight out variables) */
 
-	if ((rs >= 0) && (pr == NULL)) {
+	if ((rs >= 0) && (pr == nullptr)) {
 	    char	nn[MAXNAMELEN + 1] ;
 	    char	dn[MAXHOSTNAMELEN + 1] ;
 
@@ -191,7 +193,7 @@ int proginfo_setpiver(PI *pip,ids *idp,cchar *pr,pivars *vars) noex {
 
 /* try to see if a path was given at invocation */
 
-	if ((rs >= 0) && (pr == NULL)) {
+	if ((rs >= 0) && (pr == nullptr)) {
 
 #if	CF_DEBUG
 	    if (DEBUGLEVEL(3)) {
@@ -200,7 +202,7 @@ int proginfo_setpiver(PI *pip,ids *idp,cchar *pr,pivars *vars) noex {
 	    }
 #endif
 
-	    if (pip->progdname == NULL)
+	    if (pip->progdname == nullptr)
 	        rs = proginfo_progdname(pip) ;
 
 #if	CF_DEBUG
@@ -210,13 +212,13 @@ int proginfo_setpiver(PI *pip,ids *idp,cchar *pr,pivars *vars) noex {
 	            rs,pip->progdname) ;
 #endif
 
-	    if ((rs >= 0) && (pip->progdname != NULL)) {
+	    if ((rs >= 0) && (pip->progdname != nullptr)) {
 	        cchar	*cp ;
 	        pl = sfrootdirname(pip->progdname,-1,&cp) ;
 #if	CF_DEBUG
 	        if (DEBUGLEVEL(3)) {
 	            debugprintf("proginfo_setpiv: sfrootdirname() pl=%d\n",pl) ;
-	            debugprintf("proginfo_setpiv: p=>%t<\n",cp,pl) ;
+	            debugprintf("proginfo_setpiv: p=>%r<\n",cp,pl) ;
 	        }
 #endif
 
@@ -238,14 +240,14 @@ int proginfo_setpiver(PI *pip,ids *idp,cchar *pr,pivars *vars) noex {
 
 /* default is a fixed string (from the initialization variables) */
 
-	if ((rs >= 0) && (pr == NULL)) {
+	if ((rs >= 0) && (pr == nullptr)) {
 	    pr = vars->pr ;
 	    pl = -1 ;
 	}
 
 /* enter it in if we have found it */
 
-	if ((rs >= 0) && (pr != NULL)) {
+	if ((rs >= 0) && (pr != nullptr)) {
 	    rs = proginfo_setprogroot(pip,pr,pl) ;
 	    prlen = rs ;
 	}
@@ -264,20 +266,21 @@ local int sfrootdirname(char *dp,int dl,cchar **rpp) noex {
 	int		bl ;
 	int		sl = -1 ;
 	int		f ;
-	cchar	*sp = NULL ;
+	cchar	*sp = nullptr ;
 	cchar	*bp ;
 
-	if (rpp != NULL)
-	    *rpp = NULL ;
+	if (rpp) {
+	    *rpp = nullptr ;
+	}
 
 #if	CF_DEBUGS
-	debugprintf("sfrootdirname: d=%t\n",dp,dl) ;
+	debugprintf("sfrootdirname: d=%r\n",dp,dl) ;
 #endif
 
 	bl = sfbasename(dp,dl,&bp) ;
 
 #if	CF_DEBUGS
-	debugprintf("sfrootdirname: b=%t\n",bp,bl) ;
+	debugprintf("sfrootdirname: b=%r\n",bp,bl) ;
 #endif
 
 	f = ((bl == 3) && (strncmp(bp,"bin",bl) == 0)) ;
@@ -293,9 +296,9 @@ local int sfrootdirname(char *dp,int dl,cchar **rpp) noex {
 	    sl = sfdirname(dp,dl,&sp) ;
 
 #if	CF_DEBUGS
-	    debugprintf("sfrootdirname: pr=%t\n",sp,sl) ;
+	    debugprintf("sfrootdirname: pr=%r\n",sp,sl) ;
 #endif
-	    if ((sl >= 0) && (rpp != NULL)) *rpp = sp ;
+	    if ((sl >= 0) && (rpp != nullptr)) *rpp = sp ;
 	}
 
 #if	CF_DEBUGS
@@ -310,7 +313,7 @@ local int dircheck(ids *idp,cchar *dname) noex {
 	if (ustat sb ; (rs = u_stat(dname,&sb)) >= 0) {
 	    if (S_ISDIR(sb.st_mode)) {
 	        cint	am = (R_OK|X_OK) ;
-	        rs = permid(idp,&sb,am) ;
+	        rs = permids(idp,&sb,am) ;
 	    } else {
 	        rs = SR_NOTDIR ;
 	    }

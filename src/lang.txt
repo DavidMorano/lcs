@@ -1,1 +1,1 @@
-/* lang=C++20 (conformance reviewed) */
+/* lang=C++20 */

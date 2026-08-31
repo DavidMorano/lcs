@@ -3,7 +3,7 @@
 /* return a binary random number according to the specified probability */
 
 
-#include	<envstandards.h>
+#include	<envstandards.h>	/* ordered first to configure */
 #include	<cstdlib>
 
 

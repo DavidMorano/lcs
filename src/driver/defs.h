@@ -202,7 +202,7 @@ struct proginfo {
 	void		*ofp ;
 	void		*userlist ;	/* user-list state */
 	void		*config ;	/* configuration */
-	PROGINFO_FL	have, f, changed, final ;
+	PROGINFO_FL	have, f, changed, finval ;
 	PROGINFO_FL	open ;
 	PARAMOPT	aparams ;
 	FSDIRTREE_STAT	tarstat ;

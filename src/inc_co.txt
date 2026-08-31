@@ -1,0 +1,25 @@
+enum vecstrmems {
+    	vecstrmem_addcspath,
+	vecstrmem_count,
+	vecstrmem_delall,
+	vecstrmem_strsize,
+	vecstrmem_recsize,
+	vecstrmem_cksize,
+	vecstrmem_audit,
+	vecstrmem_finish,
+	vecstrmem_overlast
+} ; /* end enum (vecstrmems) */
+
+struct vecstr_co {
+	vecstr		*op = nullptr ;
+	int		w = -1 ;
+	void operator () (vecstr *p,int m) noex {
+	    op = p ;
+	    w = m ;
+	} ;
+	operator int () noex ;
+	int operator () () noex { 
+	    return operator int () ;
+	} ;
+} ; /* end struct (vecstr_co) */
+

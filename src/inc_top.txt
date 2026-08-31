@@ -1,0 +1,7 @@
+/* xxx SUPPORT */
+/* charset=ISO8859-1 */
+/* lang=C++20 (conformance reviewed) */
+
+/* CALYEAR object loader */
+/* version %I% last-modified %G% */
+

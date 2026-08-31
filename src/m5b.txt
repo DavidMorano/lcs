@@ -1,3 +1,3 @@
-.ccm.iim:
-	$(CPP) $(CPPFLAGS) $< > $(*).iim
+.ccm.o:
+	gxx -c -x c++ -o $@ $(CPPFLAGS) $(CXXFLAGS) $<
 

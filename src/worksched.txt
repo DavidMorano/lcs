@@ -1,0 +1,35 @@
+TODO
+
+= Current
+
+file		description
+--------------------------------------------------------------------------------
+uctim
+libuc		fix to completely compile!
+ucopen		needs dynamic allocation
+opendialer	cleanup -- actually an incredible mess
+sdprog		mess
+srv		mess
+sysdialer	code review
+cm
+mailmsghdrct	mess
+srv{x}
+libpcs		a lot of junk in there
+convertx	part of the |ctx| group
+msfile
+msfilee
+maintqotd
+mcmsg		mail-related messages (needs total modern rework)
+
+= Future
+
+file		description
+--------------------------------------------------------------------------------
+progsig		total mess
+dialcprog	incredible mess (maybe not worth refactoring)
+dialuux		a mess
+logsys		mess -- cannot compile on macOS-Darwin (no STREAMS®)
+quote		not finished junk (contains junk) -- moved to abeyance
+sesmsg		message fiasco
+sesnotes	mess
+

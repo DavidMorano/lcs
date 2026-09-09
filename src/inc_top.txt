@@ -2,6 +2,6 @@
 /* charset=ISO8859-1 */
 /* lang=C++20 (conformance reviewed) */
 
-/* CALYEAR object loader */
+/* test program */
 /* version %I% last-modified %G% */
 

@@ -6,7 +6,6 @@ file		description
 --------------------------------------------------------------------------------
 uctim
 libuc		fix to completely compile!
-ucopen		needs dynamic allocation
 opendialer	cleanup -- actually an incredible mess
 sdprog		mess
 srv		mess

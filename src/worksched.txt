@@ -5,6 +5,8 @@ TODO
 file		description
 --------------------------------------------------------------------------------
 uctim
+strfilemk
+strfilemks	cleanup
 libuc		fix to completely compile!
 opendialer	cleanup -- actually an incredible mess
 sdprog		mess

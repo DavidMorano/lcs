@@ -71,9 +71,9 @@ extern char	*malloc_sbuf() ;
 
 /* forward references */
 
-static int	present() ;
+local int	present() ;
 
-static void	initpa() ;
+local void	initpa() ;
 
 
 /* external variables */

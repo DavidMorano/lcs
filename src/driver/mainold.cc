@@ -76,7 +76,7 @@ extern "C" int	printhelp(void *,cchar *,cchar *,cchar *) ;
 
 /* forward references */
 
-static void	print_string(bfile *,cchar *,int) ;
+local void	print_string(bfile *,cchar *,int) ;
 
 
 /* local structures */
@@ -87,7 +87,7 @@ static void	print_string(bfile *,cchar *,int) ;
 
 /* local variables */
 
-static const char	*argopts[] = {
+static cchar	*argopts[] = {
 	"ROOT",
 	"DEBUG",
 	"VERSION",

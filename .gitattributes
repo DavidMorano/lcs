@@ -6,5 +6,6 @@
 *.mm	linguist-language=Roff
 *.ms	linguist-language=Roff
 *.dwb	linguist-language=Roff
+*.mak	linguist-language=Makefile
 
 

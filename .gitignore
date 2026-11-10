@@ -24,6 +24,7 @@
 *.bin
 *.cache
 *.save
+*.out
 
 # ignore TAR and compressed TAR files
 *.tar

@@ -53,7 +53,7 @@
 
 /* forward references */
 
-static int	numbits() ;
+local int	numbits() ;
 
 
 /* external variables */
@@ -101,7 +101,7 @@ BITNUM	*cnp ;
 }
 
 
-static int numbits(int n)
+local int numbits(int n)
 {
 	int	sum = 0 ;
 

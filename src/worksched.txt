@@ -4,16 +4,11 @@ TODO
 
 file		description
 --------------------------------------------------------------------------------
-uctim
-strfilemk
-strfilemks	cleanup
+uctim		check for timer-set change
 libuc		fix to completely compile!
 opendialer	cleanup -- actually an incredible mess
 sdprog		mess
 srv		mess
-sysdialer	code review
-cm
-mailmsghdrct	mess
 srv{x}
 libpcs		a lot of junk in there
 convertx	part of the |ctx| group
@@ -22,6 +17,10 @@ msfilee
 maintqotd
 mcmsg		mail-related messages (needs total modern rework)
 
+= Ready for testing
+sysdialer	compiles		-- should be ready
+cm		compiles (fine?)	-- should be ready
+
 = Future
 
 file		description
@@ -29,8 +28,21 @@ file		description
 progsig		total mess
 dialcprog	incredible mess (maybe not worth refactoring)
 dialuux		a mess
-logsys		mess -- cannot compile on macOS-Darwin (no STREAMS®)
 quote		not finished junk (contains junk) -- moved to abeyance
 sesmsg		message fiasco
 sesnotes	mess
+
++ Retain (for now, but otherwise ignore)
+
+file		description
+--------------------------------------------------------------------------------
+logsys		mess -- cannot compile on macOS-Darwin (no STREAMS®)
+mailmsghdrct	LIBPCS -- not coded up properly
+
+= Abeyance
+
+file		description
+--------------------------------------------------------------------------------
+strfilemk	-> abeyance
+strfilemks	-> abeyance -- cleanup
 

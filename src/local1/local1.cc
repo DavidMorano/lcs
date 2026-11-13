@@ -78,18 +78,18 @@ extern struct global	g ;
 
 /* forward references */
 
-static int	expandstr() ;
-static int	present() ;
-static int	better() ;
-static int	extend() ;
+local int	expandstr() ;
+local int	present() ;
+local int	better() ;
+local int	extend() ;
 
-static void	taken(), taken_back() ;
-static void	pa_init() ;
-static void	inplay_init() ;
+local void	taken(), taken_back() ;
+local void	pa_init() ;
+local void	inplay_init() ;
 
 #if	F_DEBUG
-static void	taken_print() ;
-static void	eprint_string() ;
+local void	taken_print() ;
+local void	eprint_string() ;
 #endif
 
 
@@ -299,7 +299,7 @@ badmalloc1:
 
 
 
-static int expandstr(gp,isp,n,esi,pa,npa,s_current,osp)
+local int expandstr(gp,isp,n,esi,pa,npa,s_current,osp)
 struct global	*gp ;
 int		n, esi ;
 struct strings	*isp, *osp ;
@@ -555,7 +555,7 @@ badstore:
 
 
 
-static int extend(gp,isp,n,lcs_len,pa,npa,s_current,cslen,csj,esep,esi)
+local int extend(gp,isp,n,lcs_len,pa,npa,s_current,cslen,csj,esep,esi)
 struct global	*gp ;
 struct strings	*isp ;
 int		n ;
@@ -637,7 +637,7 @@ int		cslen, csj, esi ;
 
 
 /* subroutine to see if a character is present in all (other) strings */
-static int present(gp,vlp,nstrings,esi,tc,pa,npa,minleft)
+local int present(gp,vlp,nstrings,esi,tc,pa,npa,minleft)
 struct global	*gp ;
 struct veclist	*vlp ;
 int		nstrings, esi, tc ;
@@ -696,7 +696,7 @@ int		minleft ;
 
 
 /* update the "taken" array from the information in 'pa' */
-static void taken(vlp,pa,oj)
+local void taken(vlp,pa,oj)
 struct veclist	*vlp ;
 char		**pa ;
 int		oj ;
@@ -753,7 +753,7 @@ int		oj ;
 
 
 /* take back the last move */
-static void taken_back(vlp,pa,oj)
+local void taken_back(vlp,pa,oj)
 struct veclist	*vlp ;
 char		**pa ;
 int		oj ;
@@ -799,7 +799,7 @@ int		oj ;
 /* end subroutine (taken_back) */
 
 
-static void pa_init(vlp,pa)
+local void pa_init(vlp,pa)
 struct veclist	*vlp ;
 char		**pa ;
 {
@@ -815,7 +815,7 @@ char		**pa ;
 /* end subroutine (pa_init) */
 
 
-static int better(osp,s_current,cslen)
+local int better(osp,s_current,cslen)
 struct strings	*osp ;
 char		s_current[] ;
 int		cslen ;
@@ -958,7 +958,7 @@ int		esi ;
 
 #if	F_DEBUG
 
-static void taken_print(gp,isp)
+local void taken_print(gp,isp)
 struct global	*gp ;
 struct strings	*isp ;
 {
@@ -990,7 +990,7 @@ struct strings	*isp ;
 #endif /* F_DEBUG */
 
 
-static void eprint_string(s,len)
+local void eprint_string(s,len)
 char	s[] ;
 int	len ;
 {

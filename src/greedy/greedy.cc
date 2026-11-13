@@ -70,9 +70,9 @@ extern char	*malloc_sbuf() ;
 
 /* forward references */
 
-static int	present() ;
+local int	present() ;
 
-static void	initpa() ;
+local void	initpa() ;
 
 
 /* external variables */
@@ -292,7 +292,7 @@ badmalloc1:
 
 
 /* subroutine to see if a character is present in all (other) strings */
-static int present(vlp,nstrings,ni,tc,pa,npa,minleft)
+local int present(vlp,nstrings,ni,tc,pa,npa,minleft)
 struct veclist	*vlp ;
 int		nstrings, ni, tc ;
 char		**pa, **npa ;
@@ -335,7 +335,7 @@ int		minleft ;
 /* end subroutine (present) */
 
 
-static void initpa(vlp,pa)
+local void initpa(vlp,pa)
 struct veclist	*vlp ;
 char		**pa ;
 {

@@ -50,7 +50,7 @@
 
 /* forward references */
 
-static int	numbits(int) ;
+local int	numbits(int) ;
 
 
 /* external variables */
@@ -67,7 +67,7 @@ static int	numbits(int) ;
 
 int countnum_prepare(COUNT_NUM *cnp)
 {
-	const int	size = (MAX16 * sizeof(int)) ;
+	cint	size = (MAX16 * sizeof(int)) ;
 	int		rs ;
 	void		*p ;
 
@@ -100,7 +100,7 @@ int countnum_forsake(COUNT_NUM *cnp)
 
 int count_start(COUNT *cp,COUNT_NUM *cnp,int n)
 {
-	const int	nw = ((n / 32) + 1) ;
+	cint	nw = ((n / 32) + 1) ;
 	int		rs ;
 	int		size ;
 	void		*p ;
@@ -198,7 +198,7 @@ int count_finish(COUNT *cp)
 /* local subroutines */
 
 
-static int numbits(int n)
+local int numbits(int n)
 {
 	int		sum = 0 ;
 

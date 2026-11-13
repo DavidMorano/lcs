@@ -71,7 +71,7 @@ extern int	procfile() ;
 
 void	print_string() ;
 
-static void	helpfile() ;
+local void	helpfile() ;
 
 
 /* local structures */
@@ -753,7 +753,7 @@ badret:
 
 
 
-static void helpfile(f,ofp)
+local void helpfile(f,ofp)
 char	f[] ;
 bfile	*ofp ;
 {

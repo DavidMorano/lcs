@@ -71,8 +71,8 @@ extern int	random1() ;
 
 /* forward references */
 
-static void	helpfile() ;
-static void	print_strings() ;
+local void	helpfile() ;
+local void	print_strings() ;
 
 
 /* local structures */
@@ -750,7 +750,7 @@ badret:
 
 
 
-static void helpfile(f,ofp)
+local void helpfile(f,ofp)
 char	f[] ;
 bfile	*ofp ;
 {
@@ -773,7 +773,7 @@ bfile	*ofp ;
 /* end subroutine (helpfile) */
 
 
-static void print_strings(fp,s,len)
+local void print_strings(fp,s,len)
 bfile	*fp ;
 char	s[] ;
 int	len ;

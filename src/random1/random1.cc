@@ -71,12 +71,12 @@ extern char	*malloc_sbuf() ;
 
 /* forward references */
 
-static int	present() ;
-static int	better() ;
-static int	extend() ;
+local int	present() ;
+local int	better() ;
+local int	extend() ;
 
-static void	taken() ;
-static void	initpa() ;
+local void	taken() ;
+local void	initpa() ;
 
 
 /* external variables */
@@ -368,7 +368,7 @@ badstore:
 
 
 
-static int extend(gp,isp,n,lcs_len,pa,npa,s_current,cslen,csj,esep,esi)
+local int extend(gp,isp,n,lcs_len,pa,npa,s_current,cslen,csj,esep,esi)
 struct global	*gp ;
 struct strings	*isp ;
 int		n ;
@@ -416,7 +416,7 @@ int		cslen, csj, esi ;
 
 
 /* subroutine to see if a character is present in all (other) strings */
-static int present(gp,vlp,nstrings,esi,tc,pa,npa,minleft)
+local int present(gp,vlp,nstrings,esi,tc,pa,npa,minleft)
 struct global	*gp ;
 struct veclist	*vlp ;
 int		nstrings, esi, tc ;
@@ -471,7 +471,7 @@ int		minleft ;
 
 
 /* update the "taken" array from the information in 'pa' */
-static void taken(vlp,pa)
+local void taken(vlp,pa)
 struct veclist	*vlp ;
 char		**pa ;
 {
@@ -491,7 +491,7 @@ char		**pa ;
 /* end subroutine (taken) */
 
 
-static void initpa(vlp,pa)
+local void initpa(vlp,pa)
 struct veclist	*vlp ;
 char		**pa ;
 {
@@ -507,7 +507,7 @@ char		**pa ;
 /* end subroutine (initpa) */
 
 
-static int better(osp,s_current,cslen)
+local int better(osp,s_current,cslen)
 struct strings	*osp ;
 char		s_current[] ;
 int		cslen ;

@@ -28,7 +28,6 @@ file		description
 progsig		total mess
 dialcprog	incredible mess (maybe not worth refactoring)
 dialuux		a mess
-quote		not finished junk (contains junk) -- moved to abeyance
 sesmsg		message fiasco
 sesnotes	mess
 
@@ -43,6 +42,7 @@ mailmsghdrct	LIBPCS -- not coded up properly
 
 file		description
 --------------------------------------------------------------------------------
+quote		not finished junk (contains junk) -- moved to abeyance
 strfilemk	-> abeyance
 strfilemks	-> abeyance -- cleanup
 
